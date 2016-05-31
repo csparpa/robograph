@@ -1,0 +1,2 @@
+class GraphError(Exception):
+    pass
