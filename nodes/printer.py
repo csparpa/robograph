@@ -1,10 +1,12 @@
 import node
 
 
-class Printer(node.Node):
+class ConsolePrinter(node.Node):
+
+    # Righthand
+    def input(self, context):
+        self._context = context
 
     # Lefthand
-    def obtain(self, value=None):
-        def _print(arg):
-            print arg
-        return _print
+    def output(self):
+        print self._context

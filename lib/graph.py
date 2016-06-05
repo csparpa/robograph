@@ -5,8 +5,6 @@ from exceptions import GraphError
 class Graph:
 
     _nxgraph = None
-    _root_node = None
-    _context = None
 
     def __init__(self, name, nodes=None):
         self._name = name
@@ -20,7 +18,7 @@ class Graph:
 
     @property
     def root_node(self):
-        return self._root_node
+        return nx.topological_sort(self._nxgraph, reverse=True)[-1]
 
     def add_node(self, node):
         self._nxgraph.add_node(node)
@@ -36,27 +34,17 @@ class Graph:
             raise GraphError('Graph does not contain this node')
         self._nxgraph.add_edge(node_from, node_to, dict(name=name))
 
-    def set_root_node(self, root_node):
-        if not self._nxgraph.has_node(root_node):
-            raise GraphError('Graph does not contain this root node')
-        self._root_node = root_node
+    def execute(self):
+        # Sort post-order (leaf nodes before, root node at then end)
+        ordered_nodes = nx.topological_sort(self._nxgraph, reverse=True)
 
-    # Righthand
-    def inject(self, context):
-        self._context = context
-
-    def execute(self, context):
-        # inject context into root node
-        self._root_node.inject(context)
-
-        # postorder traversal of the NX graph (last item is the root node)
-        postorder_nodes = nx.topological_sort(self._nxgraph, reverse=True)
-
-        # evaluate all nodes but the root one, following order
-        value = [node.obtain() for node in postorder_nodes[:-1]]
-
-        # evaluate root node
-        return self._root_node.obtain(value)
+        # Output of node N is input for its parent
+        for n in ordered_nodes:
+            output = n.output()
+            if not self._nxgraph.predecessors(n):
+                return
+            for parent in self._nxgraph.predecessors(n):
+                parent.input(output)
 
     def __unicode__(self):
         return unicode(self.__class__) + u' - %s' % (self._name,)
