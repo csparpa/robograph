@@ -9,4 +9,4 @@ class ConsolePrinter(node.Node):
 
     # Lefthand
     def output(self):
-        print self._context
+        return self._context
