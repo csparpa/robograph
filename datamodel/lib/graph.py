@@ -1,12 +1,10 @@
 import networkx as nx
 from exceptions import GraphError
-from ..nodes import node
 
 
-class Graph(node.Node):
+class Graph():
 
     def __init__(self, name, nodes=None):
-        node.Node.__init__(self, name=name)
         self._name = name
         self._nxgraph = nx.DiGraph()
         if nodes is not None:
@@ -15,9 +13,6 @@ class Graph(node.Node):
     @property
     def root_node(self):
         return nx.topological_sort(self._nxgraph, reverse=True)[-1]
-
-    def output(self):
-        return self.execute()
 
     def add_node(self, node):
         self._nxgraph.add_node(node)
@@ -40,9 +35,10 @@ class Graph(node.Node):
         # Output of node N is input for its parent
         for n in ordered_nodes:
             output = n.output()
-            if not self._nxgraph.predecessors(n):
-                return n.output()
-            for parent in self._nxgraph.predecessors(n):
+            predecessors = self._nxgraph.predecessors(n)
+            if not predecessors:
+                return output
+            for parent in predecessors:
                 parent.input(output)
 
     def __unicode__(self):
