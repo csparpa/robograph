@@ -13,5 +13,8 @@ class Node:
     def output(self):
         pass
 
+    def reset(self):
+        pass
+
     def __str__(self):
         return u'<Node: %s - %s>' % (self._name, unicode(self.__class__))

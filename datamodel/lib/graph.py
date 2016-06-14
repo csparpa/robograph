@@ -41,5 +41,9 @@ class Graph():
             for parent in predecessors:
                 parent.input(output)
 
+    def reset(self):
+        for n in self._nxgraph.nodes():
+            n.reset()
+
     def __unicode__(self):
         return unicode(self.__class__) + u' - %s' % (self._name,)

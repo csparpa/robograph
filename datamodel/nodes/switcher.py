@@ -17,3 +17,6 @@ class If(node.Node):
         if self._condition_function(self._data):
             return self._data, self._true_function
         return self._data, self._false_function
+
+    def reset(self):
+        del self._data

@@ -13,6 +13,9 @@ class InputCombiner(node.Node):
     def output(self):
         return self._inputs
 
+    def reset(self):
+        self._inputs = list()
+
 
 class InputFilter(node.Node):
 
@@ -28,3 +31,7 @@ class InputFilter(node.Node):
         for name in self._discard:
             self._inputs.pop(name, None)
         return self._inputs
+
+    def reset(self):
+        del self._discard
+        del self._inputs

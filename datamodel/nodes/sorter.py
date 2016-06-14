@@ -17,6 +17,9 @@ class Sorter(node.Node):
             return sorted(self._context)
         return self._sorting_function(self._context)
 
+    def reset(self):
+        del self._context
+
 
 class ReverseSorter(Sorter):
 

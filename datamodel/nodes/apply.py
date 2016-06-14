@@ -13,6 +13,9 @@ class ApplyStatic(node.Node):
     def output(self):
         return self._function(self._context)
 
+    def reset(self):
+        del self._context
+
 
 class ApplyDynamic(node.Node):
     def __init__(self, name=None):
@@ -26,3 +29,7 @@ class ApplyDynamic(node.Node):
 
     def output(self):
         return self._function(self._data)
+
+    def reset(self):
+        del self._data
+        del self._function

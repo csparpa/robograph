@@ -30,3 +30,6 @@ class FileWriter(node.Node):
     def output(self):
         with codecs.open(self._filepath, 'w', encoding=self._encoding) as f:
             f.write(self._context)
+
+    def reset(self):
+        del self._context
