@@ -3,23 +3,20 @@
 
 from datamodel.base import graph
 from datamodel.nodes import printer, value
-from datamodel.nodes import switcher
-from datamodel.nodes import apply
+from datamodel.nodes.quick import branching
 
 
 def replace_word(text):
     t = value.Value(text, name="text")
-    s = switcher.If(lambda x: "hello" in x,
-                    lambda x: x.replace("hello", "ciao"),
-                    lambda x: x.replace(" ", "_"),
-                    name="if")
-    a = apply.ApplyDynamic(name="apply")
+    s = branching.If(lambda x: "hello" in x,
+                     lambda x: x.replace("hello", "ciao"),
+                     lambda x: x.replace(" ", "_"),
+                     name="if")
     p = printer.ConsolePrinter()
 
-    g = graph.Graph('replace_word', [t, s, a, p])
+    g = graph.Graph('replace_word', [t, s, p])
 
-    g.connect(p, a)
-    g.connect(a, s)
+    g.connect(p, s)
     g.connect(s, t)
 
     return g
