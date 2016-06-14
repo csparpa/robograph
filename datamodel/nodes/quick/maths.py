@@ -1,5 +1,5 @@
 import math
-from datamodel.lib.node import Node
+from datamodel.base.node import Node
 from datamodel.nodes import apply, value
 
 

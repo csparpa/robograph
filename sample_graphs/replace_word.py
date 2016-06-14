@@ -1,7 +1,7 @@
 # Given a text, replace occurrences of the word "hello" with "ciao" - if any.
 # If no occurrence is found, replace all whitespaces with "_" instead
 
-from datamodel.lib import graph
+from datamodel.base import graph
 from datamodel.nodes import printer, value
 from datamodel.nodes import switcher
 from datamodel.nodes import apply

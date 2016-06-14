@@ -1,7 +1,7 @@
 # Read from an input file a list of strings, remove duplicates, sort remaining
 # items and then write them back to a different file
 
-from datamodel.lib import graph
+from datamodel.base import graph
 from datamodel.nodes import files, apply
 
 

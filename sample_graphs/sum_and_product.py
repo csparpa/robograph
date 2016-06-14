@@ -1,6 +1,6 @@
 # Given a list of numbers, calculate its sum and product and print it on screen
 
-from datamodel.lib import graph
+from datamodel.base import graph
 from datamodel.nodes import printer, value, filter
 
 from datamodel.nodes import apply
