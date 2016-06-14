@@ -47,6 +47,18 @@ class Sqrt(ApplyStatic):
         ApplyStatic.__init__(self, math.sqrt, name=name)
 
 
+# Extrema
+
+class Max(ApplyStatic):
+    def __init__(self, name=None):
+        ApplyStatic.__init__(self, max, name=name)
+
+
+class Min(ApplyStatic):
+    def __init__(self, name=None):
+        ApplyStatic.__init__(self, min, name=name)
+
+
 # Trigonometrical
 
 class Sin(ApplyStatic):
