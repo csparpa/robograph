@@ -7,11 +7,9 @@ class Sorter(node.Node):
         node.Node.__init__(self, name=name)
         self._sorting_function = sorting_function
 
-    # Righthand
     def input(self, unsorted):
         self._context = unsorted
 
-    # Lefthand
     def output(self):
         if self._sorting_function is None:
             return sorted(self._context)
@@ -23,7 +21,6 @@ class Sorter(node.Node):
 
 class ReverseSorter(Sorter):
 
-    # Lefthand
     def output(self):
         if self._sorting_function is None:
             return sorted(self._context, reverse=True)

@@ -7,6 +7,5 @@ class Value(node.Node):
         node.Node.__init__(self, name=name)
         self._value = value
 
-    # Lefthand
     def output(self):
         return self._value
