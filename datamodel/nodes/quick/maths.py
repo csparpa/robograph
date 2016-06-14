@@ -1,5 +1,6 @@
 import math
-from ..node import Node
+
+from datamodel.lib.node import Node
 from ..apply import ApplyStatic
 from ..value import Value
 

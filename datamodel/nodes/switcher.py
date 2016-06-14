@@ -1,4 +1,4 @@
-import node
+from datamodel.lib import node
 
 
 class If(node.Node):

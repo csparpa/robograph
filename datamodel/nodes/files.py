@@ -1,4 +1,6 @@
-import node, codecs
+import codecs
+
+from datamodel.lib import node
 
 
 class FileReader(node.Node):

@@ -1,4 +1,4 @@
-import node
+from datamodel.lib import node
 
 
 class ConsolePrinter(node.Node):

@@ -1,5 +1,6 @@
-import node
 import random
+
+from datamodel.lib import node
 
 
 class IntegerRandomizer(node.Node):
