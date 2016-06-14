@@ -8,8 +8,8 @@ from datamodel.nodes import apply
 
 def sum_and_product(list_of_numbers):
     v = value.Value(list_of_numbers)
-    s = apply.Apply(lambda c: sum(c))
-    m = apply.Apply(lambda c: reduce(lambda x, y: x * y, c))
+    s = apply.ApplyStatic(lambda c: sum(c))
+    m = apply.ApplyStatic(lambda c: reduce(lambda x, y: x * y, c))
     c = filter.InputCombiner()
     p = printer.ConsolePrinter()
 
