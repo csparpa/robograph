@@ -68,12 +68,13 @@ class RawPost(HttpClient):
 
     def input(self, request_params):
         self._post_data = request_params.get('post_data', None)
+        self._files= request_params.get('files', None)
         HttpClient.input(self, request_params)
 
     def output(self):
         r = requests.post(self._url, auth=self._auth, data=self._post_data,
-                         headers=self._headers, timeout=self._timeout_secs,
-                         verify=self._verify_ssl)
+                          files=self._files, headers=self._headers,
+                          timeout=self._timeout_secs, verify=self._verify_ssl)
         payload = self._encode_payload(r)
         return r.status_code, payload, r
 
@@ -86,6 +87,7 @@ class RawPost(HttpClient):
 
     def reset(self):
         del self._post_data
+        del self._files
         HttpClient.reset(self)
 
 
@@ -95,3 +97,4 @@ class Post(RawPost):
         status_code, payload, raw_response = RawPost.output(self)
         if status_code != requests.codes.ok:
             return None
+        return payload
