@@ -59,6 +59,8 @@ class Get(RawGet):
 
     def output(self):
         status_code, payload, raw_response = RawGet.output(self)
+        if status_code != requests.codes.ok:
+            return None
         return payload
 
 
@@ -91,4 +93,5 @@ class Post(RawPost):
 
     def output(self):
         status_code, payload, raw_response = RawPost.output(self)
-        return payload
+        if status_code != requests.codes.ok:
+            return None
