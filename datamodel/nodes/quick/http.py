@@ -18,6 +18,13 @@ class HttpClient(node.Node):
         self._timeout_secs = request_params.get('timeout_secs',
                                                 self.DEFAULT_TIMEOUT_SECS)
 
+    def _encode_payload(self, response):
+        if self._output_encoding == 'json':
+            return response.json()
+        if self._output_encoding == 'binary':
+            return response.content
+        return response.text
+
     def output(self):
         pass
 
@@ -29,6 +36,8 @@ class HttpClient(node.Node):
         del self._verify_ssl
         del self._timeout_secs
 
+
+# GET
 
 class RawGet(HttpClient):
 
@@ -42,13 +51,6 @@ class RawGet(HttpClient):
                          verify=self._verify_ssl)
         payload = self._encode_payload(r)
         return r.status_code, payload, r
-
-    def _encode_payload(self, response):
-        if self._output_encoding == 'json':
-            return response.json()
-        if self._output_encoding == 'binary':
-            return response.content
-        return response.text
 
     def reset(self):
         del self._query
@@ -64,6 +66,8 @@ class Get(RawGet):
         return payload
 
 
+# POST
+
 class RawPost(HttpClient):
 
     def input(self, request_params):
@@ -77,13 +81,6 @@ class RawPost(HttpClient):
                           timeout=self._timeout_secs, verify=self._verify_ssl)
         payload = self._encode_payload(r)
         return r.status_code, payload, r
-
-    def _encode_payload(self, response):
-        if self._output_encoding == 'json':
-            return response.json()
-        if self._output_encoding == 'binary':
-            return response.content
-        return response.text
 
     def reset(self):
         del self._post_data
