@@ -1,5 +1,5 @@
 import random
-
+import uuid
 from datamodel.base import node
 
 
@@ -43,3 +43,8 @@ class GaussianRandomizer(node.Node):
 
     def output(self):
         return random.gauss(self._mu, self._sigma)
+
+
+class Uuid(node.Node):
+    def output(self):
+        return uuid.uuid4()
