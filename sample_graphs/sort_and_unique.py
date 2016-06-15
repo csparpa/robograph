@@ -6,7 +6,7 @@ from datamodel.nodes import files, apply
 
 
 def sort_and_unique(input_file_path, output_file_path):
-    file_reader = files.FileReader(input_file_path, name="file_reader")
+    file_reader = files.TextFileReader(input_file_path, name="file_reader")
     to_string_list = apply.ApplyStatic(lambda c: c.split('\n'), name="to_string_list")
 
     def remove_duplicates_from(collection):
@@ -18,7 +18,7 @@ def sort_and_unique(input_file_path, output_file_path):
     sorter = apply.ApplyStatic(lambda unsorted: sorted(unsorted), name="sorter")
     to_string = apply.ApplyStatic(lambda token_list: '\n'.join(token_list),
                                   name='to_string')
-    file_writer = files.FileWriter(output_file_path, name='file_writer')
+    file_writer = files.TextFileWriter(output_file_path, name='file_writer')
 
     g = graph.Graph('sort_and_unique', [file_reader, to_string_list, sorter,
                                         uniquer, to_string, file_writer])
