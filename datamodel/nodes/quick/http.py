@@ -95,3 +95,53 @@ class Post(RawPost):
         if status_code != requests.codes.ok:
             return None
         return payload
+
+
+# PUT
+
+class RawPut(HttpClient):
+
+    def input(self, request_params):
+        self._put_data = request_params.get('put_data', None)
+        HttpClient.input(self, request_params)
+
+    def output(self):
+        r = requests.put(self._url, auth=self._auth, data=self._put_data,
+                         headers=self._headers, timeout=self._timeout_secs,
+                         verify=self._verify_ssl)
+        payload = self._encode_payload(r)
+        return r.status_code, payload, r
+
+    def reset(self):
+        del self._put_data
+        HttpClient.reset(self)
+
+
+class Put(RawPut):
+
+    def output(self):
+        status_code, payload, raw_response = RawPut.output(self)
+        if status_code != requests.codes.ok:
+            return None
+        return payload
+
+
+# DELETE
+
+class RawDelete(HttpClient):
+
+    def output(self):
+        r = requests.delete(self._url, auth=self._auth,
+                            headers=self._headers, timeout=self._timeout_secs,
+                            verify=self._verify_ssl)
+        payload = self._encode_payload(r)
+        return r.status_code, payload, r
+
+
+class Delete(RawDelete):
+
+    def output(self):
+        status_code, payload, raw_response = RawDelete.output(self)
+        if status_code != requests.codes.ok:
+            return None
+        return payload

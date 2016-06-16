@@ -30,8 +30,15 @@ g5.execute()
 
 g6 = http_fun.test_get_graph('https://httpbin.org/get', dict(pippo=1, pluto="ciao"))
 g6.execute()
-'''
 
+g7 = http_fun.test_put_graph('https://httpbin.org/put', dict(pippo=1, pluto="ciao"))
+g7.execute()
+
+
+g8 = http_fun.test_delete_graph('https://httpbin.org/delete')
+g8.execute()
+
+'''
 
 g9 = execution_stop.execution_stop(-7)
 g9.execute()
