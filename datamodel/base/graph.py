@@ -1,8 +1,13 @@
+import logging
 import networkx as nx
-from exceptions import GraphError
+from datamodel.base.exceptions import GraphError, StopGraphExecutionSignal, \
+    GraphExecutionError
+
+logging.basicConfig(level=logging.DEBUG)
+console = logging.getLogger(__name__)
 
 
-class Graph():
+class Graph:
 
     def __init__(self, name, nodes=None):
         self._name = name
@@ -33,13 +38,19 @@ class Graph():
         ordered_nodes = nx.topological_sort(self._nxgraph, reverse=True)
 
         # Output of node N is input for its parent
-        for n in ordered_nodes:
-            output = n.output()
-            predecessors = self._nxgraph.predecessors(n)
-            if not predecessors:
-                return output
-            for parent in predecessors:
-                parent.input(output)
+        try:
+            for n in ordered_nodes:
+                output = n.output()
+                predecessors = self._nxgraph.predecessors(n)
+                if not predecessors:
+                    return output
+                for parent in predecessors:
+                    parent.input(output)
+        except StopGraphExecutionSignal as e:
+            console.info(e.message)
+        except Exception as e:
+            console.error(e.message)
+            raise GraphExecutionError(e.message)
 
     def reset(self):
         for n in self._nxgraph.nodes():
