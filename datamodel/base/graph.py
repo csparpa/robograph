@@ -48,6 +48,7 @@ class Graph:
                     parent.input(output)
         except StopGraphExecutionSignal as e:
             console.info(e.message)
+            return None
         except Exception as e:
             console.error(e.message)
             raise GraphExecutionError(e.message)
