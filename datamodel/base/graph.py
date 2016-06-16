@@ -3,7 +3,7 @@ import networkx as nx
 from datamodel.base.exceptions import NodeConnectionError, \
     StopGraphExecutionSignal, GraphExecutionError
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.ERROR)
 console = logging.getLogger(__name__)
 
 
