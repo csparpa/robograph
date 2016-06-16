@@ -1,7 +1,7 @@
 import logging
 import networkx as nx
-from datamodel.base.exceptions import GraphError, StopGraphExecutionSignal, \
-    GraphExecutionError
+from datamodel.base.exceptions import NodeConnectionError, \
+    StopGraphExecutionSignal, GraphExecutionError
 
 logging.basicConfig(level=logging.DEBUG)
 console = logging.getLogger(__name__)
@@ -28,9 +28,9 @@ class Graph:
 
     def connect(self, node_from, node_to, name=None):
         if not self._nxgraph.has_node(node_from):
-            raise GraphError('Graph does not contain this node')
+            raise NodeConnectionError('Graph does not contain this node')
         if not self._nxgraph.has_node(node_to):
-            raise GraphError('Graph does not contain this node')
+            raise NodeConnectionError('Graph does not contain this node')
         self._nxgraph.add_edge(node_from, node_to, dict(name=name))
 
     def execute(self):

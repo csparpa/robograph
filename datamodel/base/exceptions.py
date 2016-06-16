@@ -1,4 +1,14 @@
 class GraphError(Exception):
+    """
+    Base class for Graph errors
+    """
+    pass
+
+
+class NodeConnectionError(GraphError):
+    """
+    This is to mark an error in connecting nodes of a graph
+    """
     pass
 
 
@@ -9,5 +19,8 @@ class StopGraphExecutionSignal(Exception):
     pass
 
 
-class GraphExecutionError(Exception):
+class GraphExecutionError(GraphError):
+    """
+    This is to mark an unexpected error in graph execution.
+    """
     pass
