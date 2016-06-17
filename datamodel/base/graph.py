@@ -1,4 +1,5 @@
 import logging
+import traceback
 import networkx as nx
 from datamodel.base.exceptions import NodeConnectionError, \
     StopGraphExecutionSignal, GraphExecutionError
@@ -50,7 +51,7 @@ class Graph:
             console.info(e.message)
             return None
         except Exception as e:
-            console.error(e.message)
+            console.error(traceback.format_exc())
             raise GraphExecutionError(e.message)
 
     def reset(self):
