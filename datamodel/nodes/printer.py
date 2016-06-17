@@ -1,4 +1,5 @@
 import sys
+import os
 from datamodel.base import node
 
 
@@ -11,7 +12,11 @@ class ConsolePrinter(node.Node):
         self._context = context
 
     def output(self):
-        sys.stdout.write(self._context)
+        try:
+            sys.stdout.write(str(self._context))
+            sys.stdout.write(os.linesep)
+        except:
+            pass
         return self._context
 
     def reset(self):
