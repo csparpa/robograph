@@ -16,7 +16,7 @@ def email_geolocated_ip(recipients_list, smtp_params_list, ip_addr):
     geolocate = http.Get()
     add_subject = apply.ApplyStatic(lambda body: ['testmail', body])
     to_json = transcoders.ToJSON()
-    sendmail = email.SmtpEmail(email_params_list)
+    sendmail = email.SmtpEmail(*email_params_list)
 
     g = graph.Graph('email_geolocated_ip', [v, geolocate, add_subject, to_json,
                                             sendmail])
