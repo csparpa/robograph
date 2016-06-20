@@ -1,8 +1,20 @@
 from datamodel.nodes import value
 
 
-def test_output():
+def test_requirements():
+    expected = ['value']
+    instance = value.Value()
+    assert instance.requirements == expected
+
+
+def test_input():
     expected = '1234'
-    instance = value.Value(expected)
-    instance.input('any')
+    instance = value.Value()
+    instance.input(dict(value=expected))
+    assert instance.output() == expected
+
+
+def test_output():
+    expected = dict(expected='1234')
+    instance = value.Value(value=expected)
     assert instance.output() == expected

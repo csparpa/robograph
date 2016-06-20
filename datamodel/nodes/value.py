@@ -3,16 +3,17 @@ from datamodel.base import node
 
 class Value(node.Node):
     """
-    This node returns an arbitrary value that is statically defined
+    This node returns an arbitrary value.
+    Requirements:
+      value --> any Python datatype
+    Eg:
+      Value(value=dict(number=3))
+      Value(value=dict(int_list=[1, 6, 9]))
+      Value(value=dict(word1='blabla', word2='bleble'))
     """
 
-    def __init__(self, value, name=None):
-        """
-        :param value: any value
-        :param name: name of this node
-        """
-        node.Node.__init__(self, name=name)
-        self._value = value
+    _reqs = ['value', ]
+    _params = None
 
     def output(self):
-        return self._value
+        return self._params['value']
