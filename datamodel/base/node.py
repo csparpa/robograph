@@ -1,5 +1,14 @@
 class Node:
 
+    """
+    A class representing a graph node. Each node has some required parameters
+    that can be provided either statically (at node instantiation) or dynamically
+    (by invoking the input method). Each node partecipates in the two
+    main phases of a graph execution: input and output. The outcome of the
+    output method is delegated to subclasses. Each node can be reset - which
+    is, you can clean its internal state just as if it was just created.
+    """
+
     _name = None
     _reqs = None
     _params = None
