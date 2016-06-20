@@ -13,7 +13,6 @@ class Value(node.Node):
     """
 
     _reqs = ['value', ]
-    _params = None
 
     def output(self):
         return self._params['value']
