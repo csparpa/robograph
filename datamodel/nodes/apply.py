@@ -1,35 +1,19 @@
 from datamodel.base import node
 
 
-class ApplyStatic(node.Node):
+class Apply(node.Node):
 
-    def __init__(self, function, name=None):
-        node.Node.__init__(self, name=name)
-        self._function = function
+    """
+    This node executes an arbitrary function on a given argument
+    Requirements:
+      function --> function to be executed
+      argument --> argument for the function
+    Eg:
+      Apply(function=lambda x: x+1, argument=8)
+      Apply(function=sum, argument=[8, 13, 6])
+    """
 
-    def input(self, context):
-        self._context = context
-
-    def output(self):
-        return self._function(self._context)
-
-    def reset(self):
-        del self._context
-
-
-class ApplyDynamic(node.Node):
-    def __init__(self, name=None):
-        node.Node.__init__(self, name=name)
-
-    def input(self, context):
-        if len(context) != 2:
-            raise RuntimeError()
-        self._data = context[0]
-        self._function = context[1]
+    _reqs = ['function', 'argument']
 
     def output(self):
-        return self._function(self._data)
-
-    def reset(self):
-        del self._data
-        del self._function
+        return self._params['function'](self._params['argument'])
