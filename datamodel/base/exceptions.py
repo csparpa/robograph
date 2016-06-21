@@ -1,3 +1,10 @@
+class NodeOutputLabelUndefinedError(Exception):
+    """
+    Marks that the label for a node's output is still not specified
+    """
+    pass
+
+
 class GraphError(Exception):
     """
     Base class for Graph errors
