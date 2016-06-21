@@ -4,36 +4,52 @@ from datamodel.base import node
 
 
 class ToJSON(node.Node):
+    """
+    This node converts serializable data to JSON
+    Requirements:
+      data --> data to be dumped to JSON
+    Eg:
+      ToJSON(data=[1,2,3])
+      ToJSON(dict(a="1",b="2"))
+    """
 
-    def input(self, context):
-        self._context = context
+    _reqs = ['data']
 
     def output(self):
-        return json.dumps(self._context)
-
-    def reset(self):
-        del self._context
+        return json.dumps(self._params['data'])
 
 
 class ToCSV(node.Node):
+    """
+    This node converts a data matrix to CSV
+    Requirements:
+      data_matrix --> iterable of lists (csv rows)
+      header_list --> header data list (csv header)
+      delimiter -->  separator token for row values
+      linesep --> newline char
+    Eg:
+      ToCSV(data_matrix=[[1,2,3],[4,5,6],[7,8,9]],
+            header_list=['one','two','three'],
+            delimiter=',',
+            linesep='\n')
+    """
 
-    def __init__(self, header_list=None, delimiter=',', linesep=os.linesep,
-                 name=None):
-        node.Node.__init__(self, name=name)
-        self._header_list = header_list
-        self._delimiter = delimiter
-        self._linesep = linesep
-
-    def input(self, data_matrix):
-        self._data_matrix = data_matrix
+    _reqs = ['data_matrix', 'header_list', 'delimiter', 'linesep']
 
     def output(self):
-        lines = self._linesep.join([self._delimiter.join(row) for row in self._data_matrix])
-        if self._header_list:
-            header = self._delimiter.join(self._header_list)
+        if self._params['delimiter'] is None:
+            delim = ','
+        else:
+            delim = self._params['delimiter']
+
+        if self._params['linesep'] is None:
+            eol = os.linesep
+        else:
+            eol = self._params['linesep']
+
+        lines = eol.join([delim.join(map(str, row)) for row in self._params['data_matrix']])
+        if self._params['header_list']:
+            header = delim.join(self._params['header_list'])
         else:
             header = ''
-        return header + self._linesep + lines
-
-    def reset(self):
-        del self._data_matrix
+        return header + eol + lines
