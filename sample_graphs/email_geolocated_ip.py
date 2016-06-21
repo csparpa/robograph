@@ -1,8 +1,8 @@
 # Given an IP address, geolocate it and send the result over via e-mail
 
 from datamodel.base import graph
-from datamodel.nodes import value, apply, transcoders
-from datamodel.nodes.quick import email, http
+from datamodel.nodes import value, apply
+from datamodel.nodes.quick import email, http, transcoders
 
 
 def email_geolocated_ip(recipients_list, smtp_params_list, ip_addr):
@@ -12,9 +12,9 @@ def email_geolocated_ip(recipients_list, smtp_params_list, ip_addr):
 
     http_params = dict(url='https://api.ip2country.info/ip?'+ip_addr,
                        output_encoding='json')
-    v = value.Value(http_params)
+    v = value.Value(value=http_params)
     geolocate = http.Get()
-    add_subject = apply.ApplyStatic(lambda body: ['testmail', body])
+    add_subject = apply.Apply(function=lambda body: ['testmail', body])
     to_json = transcoders.ToJSON()
     sendmail = email.SmtpEmail(*email_params_list)
 
