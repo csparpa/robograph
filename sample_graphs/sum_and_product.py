@@ -2,43 +2,44 @@
 
 import logging
 from datamodel.base import graph
-from datamodel.nodes import printer, value, filter
+from datamodel.nodes import printer, value, filter, buffer
 from datamodel.nodes import apply
 
 
 def sum_and_product(list_of_numbers):
-    v = value.Value(list_of_numbers)
-    s = apply.ApplyStatic(lambda c: sum(c))
-    m = apply.ApplyStatic(lambda c: reduce(lambda x, y: x * y, c))
-    c = filter.InputCombiner()
+    v = value.Value(value=list_of_numbers)
+    s = apply.Apply(function=sum)
+    m = apply.Apply(function=lambda c: reduce(lambda x, y: x * y, c))
+    b = buffer.Buffer()
     p = printer.ConsolePrinter()
 
-    g = graph.Graph('sum_and_product', [v, s, m, c, p])
+    g = graph.Graph('sum_and_product', [v, s, m, p, b])
 
-    g.connect(p, c)
-    g.connect(c, m)
-    g.connect(c, s)
-    g.connect(s, v)
-    g.connect(m, v)
+    g.connect(p, b, 'message')
+    g.connect(b, s, 'sum value')
+    g.connect(b, m, 'product value')
+    g.connect(s, v, 'argument')
+    g.connect(m, v, 'argument')
 
     return g
 
 
 def logged_sum_and_product(list_of_numbers):
-    v = value.Value(list_of_numbers)
-    s = apply.ApplyStatic(lambda c: sum(c))
-    m = apply.ApplyStatic(lambda c: reduce(lambda x, y: x * y, c))
-    c = filter.InputCombiner()
+    v = value.Value(value=list_of_numbers)
+    s = apply.Apply(function=sum)
+    m = apply.Apply(function=lambda c: reduce(lambda x, y: x * y, c))
+    b = buffer.Buffer()
 
-    logging.basicConfig(level=logging.DEBUG)
-    p = printer.LogPrinter(logging.getLogger(__name__), logging.DEBUG)
+    logging.basicConfig(level=logging.ERROR)
+    p = printer.LogPrinter(logger=logging.getLogger(__name__),
+                           loglevel=logging.ERROR)
 
-    g = graph.Graph('logged_sum_and_product', [v, s, m, c, p])
+    g = graph.Graph('logged_sum_and_product', [v, s, m, b, p])
 
-    g.connect(p, c)
-    g.connect(c, m)
-    g.connect(c, s)
-    g.connect(s, v)
-    g.connect(m, v)
+    g.connect(p, b, 'message')
+    g.connect(b, s, 'sum value')
+    g.connect(b, m, 'product value')
+    g.connect(s, v, 'argument')
+    g.connect(m, v, 'argument')
 
     return g
