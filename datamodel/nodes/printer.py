@@ -4,9 +4,6 @@ from datamodel.base import node
 
 
 class ConsolePrinter(node.Node):
-
-    _reqs = ['message']
-
     """
     This node prints on stdout its context and then returns it as output.
     Requirements:
@@ -15,6 +12,8 @@ class ConsolePrinter(node.Node):
       ConsolePrinter(message=[1,2,3])
       ConsolePrinter(message="hello world")
     """
+
+    _reqs = ['message']
 
     def output(self):
         try:
