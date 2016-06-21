@@ -2,7 +2,7 @@
 
 import logging
 from datamodel.base import graph
-from datamodel.nodes import printer, value, filter, buffer
+from datamodel.nodes import printer, value, buffer
 from datamodel.nodes import apply
 
 
