@@ -1,70 +1,84 @@
 import codecs
-
 from datamodel.base import node
 
 
-class FileReader(node.Node):
+class File(node.Node):
+    """
+    Abstract base class for file readers and writers
+    Requirements:
+      filepath --> path of the file to read/write
+    """
 
-    def __init__(self, filepath, name=None):
-        node.Node.__init__(self, name=name)
-        self._filepath = filepath
+    _reqs = ['filepath']
 
-    def input(self, context):
-        pass
+
+class TextFile(File):
+    """
+    Abstract base class for text file readers and writers
+    Requirements:
+      filepath --> path of the file to read/write
+      encoding --> how to encode the text read/written
+    """
+
+    _reqs = File._reqs + ['encoding']
+
+
+class TextFileReader(TextFile):
+    """
+    Reads and return the content of a text file
+    """
 
     def output(self):
-        pass
-
-
-class TextFileReader(FileReader):
-
-    def __init__(self, filepath, encoding='UTF-8', name=None):
-        FileReader.__init__(self, filepath, name=name)
-        self._encoding = encoding
-
-    def output(self):
-        with codecs.open(self._filepath, 'r', encoding=self._encoding) as f:
+        if self._params['encoding'] is None:
+            self._params['encoding'] = 'UTF-8'
+        with codecs.open(self._params['filepath'], 'r',
+                         encoding=self._params['encoding']) as f:
             content = f.read()
         return content
 
 
-class BinaryFileReader(FileReader):
+class BinaryFileReader(File):
+    """
+    Reads and return the content of a binary file
+    """
 
     def output(self):
-        with codecs.open(self._filepath, 'rb') as f:
+        with codecs.open(self._params['filepath'], 'rb') as f:
             content = f.read()
         return bytearray(content)
 
 
-class FileWriter(node.Node):
+class TextFileWriter(TextFile):
+    """
+    Writes some text data to a a text file
+    Requirements:
+      data --> str
+    """
 
-    def __init__(self, filepath, name=None):
-        node.Node.__init__(self, name=name)
-        self._filepath = filepath
-
-    def input(self, file_content):
-        self._file_content = file_content
-
-    def output(self):
-        pass
-
-    def reset(self):
-        del self._file_content
-
-
-class TextFileWriter(FileWriter):
-
-    def __init__(self, filepath, encoding='UTF-8', name=None):
-        FileWriter.__init__(self, filepath, name=name)
-        self._encoding = encoding
+    _reqs = TextFile._reqs + ['data']
 
     def output(self):
-        with codecs.open(self._filepath, 'w', encoding=self._encoding) as f:
-            f.write(self._file_content)
+        if self._params['encoding'] is None:
+            self._params['encoding'] = 'UTF-8'
+        with codecs.open(self._params['filepath'], 'w',
+                         encoding=self._params['encoding']) as f:
+            f.write(self._params['data'])
 
 
-class BinaryFileWriter(FileWriter):
+class BinaryFileWriter(File):
+    """
+    Writes some binary data (bytearray) to a a binary file
+    Requirements:
+      data --> str
+    """
+
+    _reqs = File._reqs + ['data']
 
     def output(self):
-        with open(self._filepath, "wb") as bf:
-            bf.write(bytearray(self._file_content))
+        try:
+            contents = bytearray(self._params['data'])
+        except:
+            contents = self._params['data']
+        with open(self._params['filepath'], "wb") as bf:
+            bf.write(contents)
+
