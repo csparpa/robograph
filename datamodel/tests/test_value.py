@@ -11,10 +11,12 @@ def test_input():
     expected = '1234'
     instance = value.Value()
     instance.input(dict(value=expected))
+    instance.set_output_label('any')
     assert instance.output() == expected
 
 
 def test_output():
     expected = dict(expected='1234')
     instance = value.Value(value=expected)
+    instance.set_output_label('any')
     assert instance.output() == expected

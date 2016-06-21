@@ -12,11 +12,13 @@ def test_input():
     data = 7
     instance = apply.Apply()
     instance.input(dict(function=method, argument=data))
+    instance.set_output_label('any')
     assert instance.output() == 8
 
 
 def test_output():
     data = [4, 6, 9]
     instance = apply.Apply(function=sum, argument=data)
+    instance.set_output_label('any')
     assert instance.output() == 19
 
