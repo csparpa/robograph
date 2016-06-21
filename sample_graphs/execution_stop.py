@@ -11,11 +11,11 @@ def execution_stop(number):
             raise exceptions.StopGraphExecutionSignal('arg is positive')
         raise exceptions.StopGraphExecutionSignal('arg is negative')
 
-    v = value.Value(number)
-    a = apply.ApplyStatic(stop_here)
+    v = value.Value(value=number)
+    a = apply.Apply(function=stop_here)
 
     g = graph.Graph('execution_stop', [a, v])
 
-    g.connect(a, v)
+    g.connect(a, v, 'argument')
 
     return g
