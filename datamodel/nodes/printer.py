@@ -4,56 +4,44 @@ from datamodel.base import node
 
 
 class ConsolePrinter(node.Node):
+
+    _reqs = ['message']
+
     """
     This node prints on stdout its context and then returns it as output.
+    Requirements:
+      message --> anything that can be printed on stodut
+    Eg:
+      ConsolePrinter(message=[1,2,3])
+      ConsolePrinter(message="hello world")
     """
-
-    def input(self, context):
-        self._context = context
 
     def output(self):
         try:
-            sys.stdout.write(str(self._context))
+            sys.stdout.write(str(self._params['message']))
             sys.stdout.write(os.linesep)
         except:
             pass
-        return self._context
-
-    def reset(self):
-        del self._context
+        return self._params['message']
 
 
 class LogPrinter(node.Node):
     """
-    This node prints its context on a statically defined logger and then
-    returns it as output
+    This node writes its required message on a logger and then returns the message.
+    The message will be lgoged at the specified loglevel
+    Requirements:
+      message --> anything that can be logged
+      logger --> a logging.logger
+      loglevel --> int (eg. logging.ERROR, logging.DEBUG, etc)
+      stringify --> bool
+    Eg:
+      ConsolePrinter(message=[1,2,3])
+      ConsolePrinter(message="hello world")
     """
 
-    def __init__(self, logger, loglevel, stringify=False, name=None):
-        """
-        :param logger: any logging.Logger subtype
-        :param loglevel: the log level
-        :param stringify: try to cast to str the context before passing it to
-        the logger
-        :param name: name of this node
-        """
-        node.Node.__init__(self, name=name)
-        self._logger = logger
-        self._loglevel = loglevel
-        self._stringify = stringify
-
-    def input(self, context):
-        self._context = context
+    _reqs = ['message', 'logger', 'loglevel']
 
     def output(self):
-        str_context = self._context
-        if self._stringify:
-            try:
-                str_context = str(self._context)
-            except:
-                pass  # oops...
-        self._logger.log(self._loglevel, str_context)
-        return self._context
-
-    def reset(self):
-        del self._context
+        self._params['logger'].log(self._params['loglevel'],
+                                   self._params['message'])
+        return self._params['message']
