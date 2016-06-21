@@ -89,6 +89,7 @@ class Node:
         """
         for key in self._params:
             self._params[key] = None
+        self._output_label = None
 
     def __str__(self):
         return u'<Node: %s - requires: %s - class: %s>' % (
