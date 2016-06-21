@@ -1,3 +1,6 @@
+from datamodel.base.exceptions import NodeOutputLabelUndefinedError
+
+
 class Node:
 
     """
@@ -12,6 +15,7 @@ class Node:
     _name = None
     _reqs = None
     _params = None
+    _output_label = None
 
     def __init__(self, **args):
         self._name = args.get('name', None)
@@ -53,12 +57,30 @@ class Node:
             if context.get(key, None):
                 self._params[key] = context[key]
 
+    def set_output_label(self, output_label):
+        """
+        Specifies which tagging label to apply to this node's output value
+        :param output_label: str
+        :return: None
+        """
+        self._output_label = output_label
+
     def output(self):
         """
-        Performs the magic!
+        Performs the magic! This is supposed to be implemented by subclasses
         :return: a value
         """
         pass
+
+    def execute(self):
+        """
+        Outputs a dict containing the labeled result of this node execution.
+        If the label is not yet defined, raises an exception
+        :return: dict
+        """
+        if self._output_label is None:
+            raise NodeOutputLabelUndefinedError()
+        return {self._output_label: self.output()}
 
     def reset(self):
         """
