@@ -5,103 +5,191 @@ from datamodel.nodes import apply, value
 
 # Constants
 class Pi(value.Value):
-    def __init__(self, name=None):
-        value.Value.__init__(self,
-                             3.14159265358979323846264338327950288419716939937,
-                             name=name)
+    """
+    This node returns Greek Pi
+    """
+    def __init__(self, **args):
+        value.Value.__init__(
+            self,
+            value=3.14159265358979323846264338327950288419716939937,
+            name=args.get('name', None))
 
 
 class E(value.Value):
-    def __init__(self, name=None):
-        value.Value.__init__(self,
-                             2.71828182845904523536028747135266249775724709369,
-                             name=name)
+    """
+    This node returns Euler Number
+    """
+    def __init__(self, **args):
+        value.Value.__init__(
+            self,
+            value=2.71828182845904523536028747135266249775724709369,
+            name=args.get('name', None))
 
 
 # Algebraic
 
-class Sum(apply.ApplyStatic):
-    def __init__(self, name=None):
-        apply.ApplyStatic.__init__(self, lambda c: sum(c), name=name)
+class Sum(apply.Apply):
+    def __init__(self, **args):
+        """
+        This node sums the items of the argument sequence
+        """
+        apply.Apply.__init__(self,
+                             function=sum,
+                             argument=args.get('argument', None),
+                             name=args.get('name', None))
 
 
-class Product(apply.ApplyStatic):
-    def __init__(self, name=None):
-        apply.ApplyStatic.__init__(self,
-                                   lambda c: reduce(lambda x, y: x * y, c),
-                                   name=name)
+class Product(apply.Apply):
+    """
+    This node multiplies the items of the argument sequence
+    """
+    def __init__(self, **args):
+        apply.Apply.__init__(self,
+                             function=lambda c: reduce(lambda x, y: x * y, c),
+                             argument=args.get('argument', None),
+                             name=args.get('name', None))
 
 
-class Floor(apply.ApplyStatic):
-    def __init__(self, name=None):
-        apply.ApplyStatic.__init__(self, math.floor, name=name)
+class Floor(apply.Apply):
+    """
+    This node rounds the argument value to the next integer
+    """
+    def __init__(self, **args):
+        apply.Apply.__init__(self,
+                             function=math.floor,
+                             argument=args.get('argument', None),
+                             name=args.get('name', None))
 
 
-class Ceil(apply.ApplyStatic):
-    def __init__(self, name=None):
-        apply.ApplyStatic.__init__(self, math.ceil, name=name)
+class Ceil(apply.Apply):
+    """
+    This node rounds the argument value to the previous integer
+    """
+    def __init__(self, **args):
+        apply.Apply.__init__(self,
+                             function=math.ceil,
+                             argument=args.get('argument', None),
+                             name=args.get('name', None))
 
 
-class Sqrt(apply.ApplyStatic):
-    def __init__(self, name=None):
-        apply.ApplyStatic.__init__(self, math.sqrt, name=name)
+class Sqrt(apply.Apply):
+    """
+    This node calculates the square root of the argument value
+    """
+    def __init__(self, **args):
+        apply.Apply.__init__(self,
+                             function=math.sqrt,
+                             argument=args.get('argument', None),
+                             name=args.get('name', None))
 
 
 # Extrema
 
-class Max(apply.ApplyStatic):
-    def __init__(self, name=None):
-        apply.ApplyStatic.__init__(self, max, name=name)
+class Max(apply.Apply):
+    """
+    This node extracts the biggest item in the argument sequence
+    """
+    def __init__(self, **args):
+        apply.Apply.__init__(self,
+                             function=max,
+                             argument=args.get('argument', None),
+                             name=args.get('name', None))
 
 
-class Min(apply.ApplyStatic):
-    def __init__(self, name=None):
-        apply.ApplyStatic.__init__(self, min, name=name)
+class Min(apply.Apply):
+    """
+    This node extracts the smallest item in the argument sequence
+    """
+    def __init__(self, **args):
+        apply.Apply.__init__(self,
+                             function=min,
+                             argument=args.get('argument', None),
+                             name=args.get('name', None))
 
 
 # Trigonometrical
 
-class Sin(apply.ApplyStatic):
-    def __init__(self, name=None):
-        apply.ApplyStatic.__init__(self, math.sin, name=name)
+class Sin(apply.Apply):
+    """
+    This node calculates the sine of the argument value
+    """
+    def __init__(self, **args):
+        apply.Apply.__init__(self,
+                             function=math.sin,
+                             argument=args.get('argument', None),
+                             name=args.get('name', None))
 
 
-class Cos(apply.ApplyStatic):
-    def __init__(self, name=None):
-        apply.ApplyStatic.__init__(self, math.cos, name=name)
+class Cos(apply.Apply):
+    """
+    This node calculates the cosine of the argument value
+    """
+    def __init__(self, **args):
+        apply.Apply.__init__(self,
+                             function=math.cos,
+                             argument=args.get('argument', None),
+                             name=args.get('name', None))
 
 
-class Abs(apply.ApplyStatic):
-    def __init__(self, name=None):
-        apply.ApplyStatic.__init__(self, math.fabs, name=name)
+class Abs(apply.Apply):
+    """
+    This node calculates the absolute value of the argument value
+    """
+    def __init__(self, **args):
+        apply.Apply.__init__(self,
+                             function=math.fabs,
+                             argument=args.get('argument', None),
+                             name=args.get('name', None))
 
 
 # Exponentations
 
-class Exp(apply.ApplyStatic):
-    def __init__(self, name=None):
-        apply.ApplyStatic.__init__(self, math.exp, name=name)
+class Exp(apply.Apply):
+    """
+    This node raises E to the argument value
+    """
+    def __init__(self, **args):
+        apply.Apply.__init__(self,
+                             function=math.exp,
+                             argument=args.get('argument', None),
+                             name=args.get('name', None))
 
 
 class Power(Node):
-    def __init__(self, base, name=None):
-        Node.__init__(self, name=name)
-        self._base = base
+    """
+    This node raises a base by an exponent
+    Requirements:
+      base --> float
+      exponent --> float
+    Eg:
+      Power(base=2., exponent=12.)
+      Power(base=-9.32, exponent=2.3)
+    """
 
-    def input(self, exponent):
-        self._exponent = exponent
+    _reqs = ['base', 'exponent']
 
     def output(self):
-        return math.pow(self._base, self._exponent)
+        return math.pow(self._params['base'], self._params['exponent'])
 
 
-# Logs
-class Log(apply.ApplyStatic):
-    def __init__(self, name=None):
-        apply.ApplyStatic.__init__(self, math.log, name=name)
+# Logarithms
+class Log(apply.Apply):
+    """
+    This node calculates the natural logarithm of the argument value
+    """
+    def __init__(self, **args):
+        apply.Apply.__init__(self,
+                             function=math.log,
+                             argument=args.get('argument', None),
+                             name=args.get('name', None))
 
 
-class Log10(apply.ApplyStatic):
-    def __init__(self, name=None):
-        apply.ApplyStatic.__init__(self, math.log10, name=name)
-
+class Log10(apply.Apply):
+    """
+    This node calculates the logarithm of the argument value in base 10
+    """
+    def __init__(self, **args):
+        apply.Apply.__init__(self,
+                             function=math.log10,
+                             argument=args.get('argument', None),
+                             name=args.get('name', None))
