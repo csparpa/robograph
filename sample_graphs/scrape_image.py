@@ -6,14 +6,13 @@ from datamodel.nodes.quick import http
 
 
 def scraper_image(img_url, target_path):
-    http_params = dict(url=img_url, output_encoding='binary')
-    v = value.Value(http_params)
-    h = http.Get()
-    w = files.BinaryFileWriter(target_path)
+    url = value.Value(value=img_url)
+    client = http.Get(mime_type='image/png', )
+    writer = files.BinaryFileWriter(filepath=target_path)
 
-    g = graph.Graph('scrape_image', [v, h, w])
+    g = graph.Graph('scrape_image', [url, client, writer])
 
-    g.connect(w, h)
-    g.connect(h, v)
+    g.connect(writer, client, 'data')
+    g.connect(client, url, 'url')
 
     return g
