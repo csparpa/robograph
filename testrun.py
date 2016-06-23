@@ -1,21 +1,45 @@
-from lib import graph
-from nodes import mapper, summer, multiplier, printer
+from sample_graphs import sum_and_product, sort_and_unique, replace_word, \
+    scrape_image, http_fun, execution_stop
 
-a = mapper.Multimapper('A')
-b = summer.Summer('B')
-c = multiplier.Multiplier('C')
-d = printer.Printer('D')
+'''
+g1 = sum_and_product.sum_and_product([1, 2, 3, 4])
+output = g1.execute()
 
-g = graph.Graph('example', [a, b, c, d])
 
-g.connect(a, b, name='sum')
-g.connect(a, c, name='multiplication')
-g.connect(a, d, name='printing')
-g.set_root_node(a)
-
-input_list = [1, 2, 3, 4, 5]
-output = g.execute(input_list)
-print 'Output: %s' % (output,)
+g2 = sort_and_unique.sort_and_unique('sample_graphs/testinput.txt',
+                                    'sample_graphs/testoutput.txt')
+g2.execute()
 
 
 
+g3 = replace_word.replace_word('hello there my name is hello')
+g3.execute()
+g3 = replace_word.replace_word('the word you are looking for is not here')
+g3.execute()
+
+'''
+g4 = scrape_image.scraper_image('https://httpbin.org/image/png',
+                                'sample_graphs/testscraped.png')
+g4.execute()
+
+
+
+'''
+g5 = http_fun.test_post_graph('https://httpbin.org/post', dict(x=1, y=2))
+g5.execute()
+
+g6 = http_fun.test_get_graph('https://httpbin.org/get', dict(pippo=1, pluto="ciao"))
+g6.execute()
+
+g7 = http_fun.test_put_graph('https://httpbin.org/put', dict(pippo=1, pluto="ciao"))
+g7.execute()
+
+
+g8 = http_fun.test_delete_graph('https://httpbin.org/delete')
+g8.execute()
+
+
+
+g9 = execution_stop.execution_stop(-7)
+g9.execute()
+'''
