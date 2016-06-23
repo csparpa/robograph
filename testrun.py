@@ -17,11 +17,11 @@ g3.execute()
 g3 = replace_word.replace_word('the word you are looking for is not here')
 g3.execute()
 
-
+'''
 g4 = scrape_image.scraper_image('https://httpbin.org/image/png',
                                 'sample_graphs/testscraped.png')
 g4.execute()
-'''
+
 
 
 '''
@@ -38,7 +38,8 @@ g7.execute()
 g8 = http_fun.test_delete_graph('https://httpbin.org/delete')
 g8.execute()
 
-'''
+
 
 g9 = execution_stop.execution_stop(-7)
 g9.execute()
+'''

@@ -5,6 +5,9 @@ from datamodel.base import node
 
 
 class SmtpClient:
+    """
+    Utility class representing an SMTP client
+    """
     def __init__(self, server_hostname, server_port, username, password,
                  use_tls=True):
         self._server_hostname = server_hostname
@@ -31,24 +34,36 @@ class SmtpClient:
 
 
 class SmtpEmail(node.Node):
-    def __init__(self, server_hostname, server_port, username, password,
-                 sender, recipients_list, use_tls=True, name=None):
-        node.Node.__init__(self, name=name)
-        self._smtp_client = SmtpClient(server_hostname, server_port,
-                                       username, password, use_tls)
-        self._sender = sender
-        self._recipients_list = recipients_list
+    """
+    This node sends an e-mail message via SMTP
+    Requirements:
+      server_hostname --> str, SMTP server hostname
+      server_port --> int, SMTP server port
+      username --> str, SMTP server username
+      password --> str, SMTP server password
+      use_tls --> bool, use TLS to encrypt communication with the SMTP server
+      sender --> str, e-mail address of the email sender
+      recipients_list --> list of str, recipients e-mail address list
+      subject --> subject of the email
+      body --> body of the email
+      mime_type --> MIME type of the email body (optional)
+    """
 
-    def input(self, context):
-        print context
-        self._subject = context[0]
-        self._body = context[1]
+    _reqs = ['server_hostname', 'server_port', 'username', 'password', 'sender',
+             'recipients_list', 'subject', 'body', 'mime_type']
 
     def output(self):
-        self._smtp_client.send(self._subject, self._body, self._recipients_list,
-                               self._sender, 'html')
-
-    def reset(self):
-        del self._subject
-        del self._body
+        smtp_client = SmtpClient(
+            self._params['server_hostname'],
+            self._params['server_port'],
+            self._params['username'],
+            self._params['password'],
+            self._params['use_tls'])
+        if self._params['mime_type'] is None:
+            mime = 'html'
+        else:
+            mime = self._params['mime_type']
+        smtp_client.send(self._params['subject'], self._params['body'],
+                         self._params['recipients_list'],
+                         self._params['sender'], mime)
 
