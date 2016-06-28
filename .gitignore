@@ -4,3 +4,6 @@ node_modules/
 *.pyc
 .idea
 .cache
+
+datamodel/tests/outputfile.txt
+datamodel/tests/database.db
