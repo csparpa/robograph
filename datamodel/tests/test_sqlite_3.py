@@ -4,8 +4,21 @@ from datamodel.nodes import db
 from datamodel.nodes.quick.dbs import sqlite_3
 
 
+# Utilities
+
 def clean_test_db(filepath):
     open(filepath, 'wb').close()
+
+
+def create_test_database(filepath):
+    conn = sqlite3.connect(filepath)
+    cur = conn.cursor()
+    cur.execute('''CREATE TABLE COMPANY(
+        ID INT PRIMARY KEY     NOT NULL,
+        NAME           TEXT    NOT NULL,
+        AGE            INT     NOT NULL,
+        ADDRESS        CHAR(50),
+        SALARY         REAL);''')
 
 
 def fetch_all_databases(filepath):
@@ -22,15 +35,22 @@ def fetch_all_rows(filepath):
     return cur.fetchall()
 
 
-def test_db_connection():
-    conn = sqlite_3.Sqlite3Connection('database.db')
-    assert isinstance(conn, db.FileDatabaseConnection)
+def insert_a_row(filepath, pk):
+    conn = sqlite3.connect(filepath)
+    cur = conn.cursor()
+    cur.execute('''INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) VALUES
+        (%d, 'Paul', 32, 'California', 20000.00 );''' % (pk,))
+    conn.commit()
+
+
+# Tests
 
 
 def test_requirements():
-    expected = ['db_connection', 'query']
-    instance = sqlite_3.Sqlite3()
-    assert instance.requirements == expected
+    instance = sqlite_3.Sqlite3Writer()
+    assert instance.requirements == ['db_connection', 'query']
+    instance = sqlite_3.Sqlite3BulkWriter()
+    assert instance.requirements == ['db_connection', 'query', 'parameters']
 
 
 def test_output():
@@ -42,7 +62,7 @@ def test_output():
         ADDRESS        CHAR(50),
         SALARY         REAL);'''
     conn = sqlite_3.Sqlite3Connection('database.db')
-    instance = sqlite_3.Sqlite3(db_connection=conn, query=query)
+    instance = sqlite_3.Sqlite3Writer(db_connection=conn, query=query)
     instance.output()
 
     # Check
@@ -51,21 +71,13 @@ def test_output():
     assert tables[0][0] == 'COMPANY'
 
 
-def test_data_writing():
+def test_data_creation():
     clean_test_db('database.db')
-
-    # create schema
-    query_create = '''CREATE TABLE COMPANY(
-        ID INT PRIMARY KEY     NOT NULL,
-        NAME           TEXT    NOT NULL,
-        AGE            INT     NOT NULL,
-        ADDRESS        CHAR(50),
-        SALARY         REAL);'''
-    conn = sqlite_3.Sqlite3Connection('database.db')
-    instance = sqlite_3.Sqlite3(db_connection=conn, query=query_create)
-    instance.output()
+    create_test_database('database.db')
 
     # insert data
+    instance = sqlite_3.Sqlite3Writer()
+    conn = sqlite_3.Sqlite3Connection('database.db')
     query_insert = '''INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) VALUES
         (1, 'Paul', 32, 'California', 20000.00 );'''
     instance.reset()
@@ -81,22 +93,13 @@ def test_data_writing():
 
 def test_data_modification():
     clean_test_db('database.db')
-
-    # create schema
-    query_create = '''CREATE TABLE COMPANY(
-        ID INT PRIMARY KEY     NOT NULL,
-        NAME           TEXT    NOT NULL,
-        AGE            INT     NOT NULL,
-        ADDRESS        CHAR(50),
-        SALARY         REAL);'''
-    conn = sqlite_3.Sqlite3Connection('database.db')
-    instance = sqlite_3.Sqlite3(db_connection=conn, query=query_create)
-    instance.output()
+    create_test_database('database.db')
 
     # insert data
+    conn = sqlite_3.Sqlite3Connection('database.db')
+    instance = sqlite_3.Sqlite3Writer()
     query_insert = '''INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) VALUES
         (1, 'Paul', 32, 'California', 20000.00 );'''
-    instance.reset()
     instance.input(dict(db_connection=conn, query=query_insert))
     instance.output()
 
@@ -116,3 +119,45 @@ def test_data_modification():
     instance.output()
     rows = fetch_all_rows('database.db')
     assert len(rows) == 0
+
+
+def test_data_read():
+    clean_test_db('database.db')
+    create_test_database('database.db')
+    insert_a_row('database.db', 1)
+    insert_a_row('database.db', 2)
+    insert_a_row('database.db', 3)
+
+    expected_result = [(1, 'Paul', 32, 'California', 20000.00),
+                       (2, 'Paul', 32, 'California', 20000.00),
+                       (3, 'Paul', 32, 'California', 20000.00)]
+    query_read = '''SELECT * FROM COMPANY;'''
+    conn = sqlite_3.Sqlite3Connection('database.db')
+    instance = sqlite_3.Sqlite3Reader(db_connection=conn, query=query_read)
+    result = instance.output()
+    assert len(result) == 3
+    assert result == expected_result
+
+
+def test_data_bulk_write():
+    clean_test_db('database.db')
+    create_test_database('database.db')
+
+    rows = fetch_all_rows('database.db')
+    assert len(rows) == 0
+
+    query_insert = '''INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) VALUES
+        (?, ?, ?, ?, ?);'''
+    parameters = [
+        (1, 'Paul', 32, 'California', 20000.00),
+        (2, 'Mark', 25, 'Florida', 10000.00),
+        (3, 'Tom', 48, 'Utah', 60000.00)]
+
+    conn = sqlite_3.Sqlite3Connection('database.db')
+    instance = sqlite_3.Sqlite3BulkWriter(db_connection=conn,
+                                          query=query_insert,
+                                          parameters=parameters)
+    instance.output()
+
+    rows = fetch_all_rows('database.db')
+    assert len(rows) == 3
