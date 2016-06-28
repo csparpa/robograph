@@ -4,6 +4,9 @@ from datamodel.nodes import db
 from datamodel.nodes.quick.dbs import sqlite_3
 
 
+DBFILE = 'datamodel/tests/database.db'
+
+
 # Utilities
 
 def clean_test_db(filepath):
@@ -54,30 +57,30 @@ def test_requirements():
 
 
 def test_output():
-    clean_test_db('database.db')
+    clean_test_db(DBFILE)
     query = '''CREATE TABLE COMPANY(
         ID INT PRIMARY KEY     NOT NULL,
         NAME           TEXT    NOT NULL,
         AGE            INT     NOT NULL,
         ADDRESS        CHAR(50),
         SALARY         REAL);'''
-    conn = sqlite_3.Sqlite3Connection('database.db')
+    conn = sqlite_3.Sqlite3Connection(DBFILE)
     instance = sqlite_3.Sqlite3Writer(db_connection=conn, query=query)
     instance.output()
 
     # Check
-    tables = fetch_all_databases('database.db')
+    tables = fetch_all_databases(DBFILE)
     assert len(tables) == 1
     assert tables[0][0] == 'COMPANY'
 
 
 def test_data_creation():
-    clean_test_db('database.db')
-    create_test_database('database.db')
+    clean_test_db(DBFILE)
+    create_test_database(DBFILE)
 
     # insert data
     instance = sqlite_3.Sqlite3Writer()
-    conn = sqlite_3.Sqlite3Connection('database.db')
+    conn = sqlite_3.Sqlite3Connection(DBFILE)
     query_insert = '''INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) VALUES
         (1, 'Paul', 32, 'California', 20000.00 );'''
     instance.reset()
@@ -92,11 +95,11 @@ def test_data_creation():
 
 
 def test_data_modification():
-    clean_test_db('database.db')
-    create_test_database('database.db')
+    clean_test_db(DBFILE)
+    create_test_database(DBFILE)
 
     # insert data
-    conn = sqlite_3.Sqlite3Connection('database.db')
+    conn = sqlite_3.Sqlite3Connection(DBFILE)
     instance = sqlite_3.Sqlite3Writer()
     query_insert = '''INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) VALUES
         (1, 'Paul', 32, 'California', 20000.00 );'''
@@ -108,7 +111,7 @@ def test_data_modification():
     instance.reset()
     instance.input(dict(db_connection=conn, query=query_modify))
     instance.output()
-    rows = fetch_all_rows('database.db')
+    rows = fetch_all_rows(DBFILE)
     assert len(rows) == 1
     assert rows[0][3] == 'Texas'
 
@@ -117,22 +120,22 @@ def test_data_modification():
     instance.reset()
     instance.input(dict(db_connection=conn, query=query_modify))
     instance.output()
-    rows = fetch_all_rows('database.db')
+    rows = fetch_all_rows(DBFILE)
     assert len(rows) == 0
 
 
 def test_data_read():
-    clean_test_db('database.db')
-    create_test_database('database.db')
-    insert_a_row('database.db', 1)
-    insert_a_row('database.db', 2)
-    insert_a_row('database.db', 3)
+    clean_test_db(DBFILE)
+    create_test_database(DBFILE)
+    insert_a_row(DBFILE, 1)
+    insert_a_row(DBFILE, 2)
+    insert_a_row(DBFILE, 3)
 
     expected_result = [(1, 'Paul', 32, 'California', 20000.00),
                        (2, 'Paul', 32, 'California', 20000.00),
                        (3, 'Paul', 32, 'California', 20000.00)]
     query_read = '''SELECT * FROM COMPANY;'''
-    conn = sqlite_3.Sqlite3Connection('database.db')
+    conn = sqlite_3.Sqlite3Connection(DBFILE)
     instance = sqlite_3.Sqlite3Reader(db_connection=conn, query=query_read)
     result = instance.output()
     assert len(result) == 3
@@ -140,10 +143,10 @@ def test_data_read():
 
 
 def test_data_bulk_write():
-    clean_test_db('database.db')
-    create_test_database('database.db')
+    clean_test_db(DBFILE)
+    create_test_database(DBFILE)
 
-    rows = fetch_all_rows('database.db')
+    rows = fetch_all_rows(DBFILE)
     assert len(rows) == 0
 
     query_insert = '''INSERT INTO COMPANY (ID,NAME,AGE,ADDRESS,SALARY) VALUES
@@ -153,11 +156,11 @@ def test_data_bulk_write():
         (2, 'Mark', 25, 'Florida', 10000.00),
         (3, 'Tom', 48, 'Utah', 60000.00)]
 
-    conn = sqlite_3.Sqlite3Connection('database.db')
+    conn = sqlite_3.Sqlite3Connection(DBFILE)
     instance = sqlite_3.Sqlite3BulkWriter(db_connection=conn,
                                           query=query_insert,
                                           parameters=parameters)
     instance.output()
 
-    rows = fetch_all_rows('database.db')
+    rows = fetch_all_rows(DBFILE)
     assert len(rows) == 3
