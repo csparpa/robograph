@@ -92,7 +92,7 @@ class Graph:
             raise exceptions.NodeConnectionError('Graph does not contain '
                                                  'this node')
         node_to.set_output_label(output_label)
-        self._nxgraph.add_edge(node_from, node_to)
+        self._nxgraph.add_edge(node_from, node_to, name=output_label)
 
     def has_isles(self):
         """
