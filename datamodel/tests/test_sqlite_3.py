@@ -92,6 +92,7 @@ def test_data_creation():
     instance.input(dict(db_connection=conn, query=query_insert))
     with pytest.raises(db.IntegrityException):
         instance.output()
+        pytest.fail()
 
 
 def test_data_modification():
