@@ -2,7 +2,7 @@
 
 import logging
 from datamodel.base import graph
-from datamodel.nodes import printer, value, buffer
+from datamodel.nodes import printer, value, buffers
 from datamodel.nodes import apply
 
 
@@ -10,7 +10,7 @@ def sum_and_product(list_of_numbers):
     v = value.Value(value=list_of_numbers)
     s = apply.Apply(function=sum)
     m = apply.Apply(function=lambda c: reduce(lambda x, y: x * y, c))
-    b = buffer.Buffer()
+    b = buffers.Buffer()
     p = printer.ConsolePrinter()
 
     g = graph.Graph('sum_and_product', [v, s, m, p, b])
@@ -28,7 +28,7 @@ def logged_sum_and_product(list_of_numbers):
     v = value.Value(value=list_of_numbers)
     s = apply.Apply(function=sum)
     m = apply.Apply(function=lambda c: reduce(lambda x, y: x * y, c))
-    b = buffer.Buffer()
+    b = buffers.Buffer()
 
     logging.basicConfig(level=logging.ERROR)
     p = printer.LogPrinter(logger=logging.getLogger(__name__),
