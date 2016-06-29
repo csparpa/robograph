@@ -1,8 +1,7 @@
 import logging
 import traceback
 import networkx as nx
-from datamodel.base.exceptions import NodeConnectionError, \
-    StopGraphExecutionSignal, GraphExecutionError
+from datamodel.base import exceptions
 
 logging.basicConfig(level=logging.ERROR)
 console = logging.getLogger(__name__)
@@ -28,6 +27,18 @@ class Graph:
         """
         return nx.topological_sort(self._nxgraph, reverse=True)[-1]
 
+    @property
+    def nodes(self):
+        """
+        Returns a list of nodes in this graph
+        :return: list
+        """
+        return self._nxgraph.nodes()
+
+    @property
+    def nxgraph(self):
+        return self._nxgraph
+
     def add_node(self, node):
         """
         Adds the specified node to the graph
@@ -45,6 +56,25 @@ class Graph:
         for node in sequence_of_nodes:
             self.add_node(node)
 
+    def remove_node(self, node):
+        """
+        Removes the specified node from the graph
+        :param node: a datamodel.base.node.Node instance
+        :return: None
+        """
+        if not self._nxgraph.has_node(node):
+            raise exceptions.NodeDeletionError('Graph does not contain this node')
+        self._nxgraph.remove_node(node)
+
+    def remove_nodes(self, sequence_of_nodes):
+        """
+        Removes the specified collection of nodes from the graph
+        :param sequence_of_nodes: collections of datamodel.base.node.Node instances
+        :return: None
+        """
+        for node in sequence_of_nodes:
+            self.remove_node(node)
+
     def connect(self, node_from, node_to, output_label):
         """
         Connects node_from to node_to on the underlying graph model and states
@@ -56,11 +86,21 @@ class Graph:
         :return: None
         """
         if not self._nxgraph.has_node(node_from):
-            raise NodeConnectionError('Graph does not contain this node')
+            raise exceptions.NodeConnectionError('Graph does not contain '
+                                                 'this node')
         if not self._nxgraph.has_node(node_to):
-            raise NodeConnectionError('Graph does not contain this node')
+            raise exceptions.NodeConnectionError('Graph does not contain '
+                                                 'this node')
         node_to.set_output_label(output_label)
         self._nxgraph.add_edge(node_from, node_to)
+
+    def has_isles(self):
+        """
+        Tells if the graph has subgraphs. If so, it means that the graph has at
+        least one node that is "isolated" from the bigger graph component.
+        :return: bool
+        """
+        return len(nx.isolates(self._nxgraph)) != 0
 
     def execute(self, result_label="result"):
         """
@@ -70,6 +110,11 @@ class Graph:
         :param result_label: str (optional)
         :return:
         """
+
+        # Cannote execute graphs with isles
+        if self.has_isles():
+            raise exceptions.GraphExecutionError("Cannot execute graphs with "
+                                                 "isolated nodes")
 
         # Sort post-order (leaf nodes before, root node at then end)
         ordered_nodes = nx.topological_sort(self._nxgraph, reverse=True)
@@ -87,12 +132,12 @@ class Graph:
                     return output
                 for parent in predecessors:
                     parent.input(output)
-        except StopGraphExecutionSignal as e:
+        except exceptions.StopGraphExecutionSignal as e:
             console.info(e.message)
             return None
         except Exception as e:
             console.error(traceback.format_exc())
-            raise GraphExecutionError(e.message)
+            raise exceptions.GraphExecutionError(e.message)
 
     def reset(self):
         """
@@ -103,5 +148,9 @@ class Graph:
         for n in self._nxgraph.nodes():
             n.reset()
 
-    def __unicode__(self):
-        return unicode(self.__class__) + u' - %s' % (self._name,)
+    def __repr__(self):
+        return '<graph: %s instance of: %s>' % (self._name or '',
+                                                str(self.__class__))
+
+    def __len__(self):
+        return self._nxgraph.number_of_nodes()

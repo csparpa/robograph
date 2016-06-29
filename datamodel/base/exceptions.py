@@ -19,6 +19,12 @@ class NodeConnectionError(GraphError):
     pass
 
 
+class NodeDeletionError(GraphError):
+    """
+    This is to mark an error in deleting nodes of a graph
+    """
+
+
 class StopGraphExecutionSignal(Exception):
     """
     This is to notify termination of graph execution due to ordinary reasons.
