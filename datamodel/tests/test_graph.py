@@ -7,6 +7,14 @@ class Identity(node.Node):
     _reqs = []
 
 
+class WithParameters(node.Node):
+    _reqs = []
+
+    def __init__(self, **args):
+        node.Node.__init__(self, **args)
+        self._params.update(args)
+
+
 def make_a_graph():
     root = Identity(name='root')
     leaf1 = Identity(name='leaf1')
@@ -117,3 +125,16 @@ def test_has_isles():
     assert not g.has_isles()
     g.remove_node(med2)
     assert g.has_isles()
+
+
+def test_reset():
+    n1 = WithParameters(a=1, b=2)
+    n2 = WithParameters(c=1, d=2)
+    g = graph.Graph('testgraph', [n1, n2])
+    for n in g.nodes:
+        for p in n.parameters.values():
+            assert p is not None
+    g.reset()
+    for n in g.nodes:
+        for p in n.parameters.values():
+            assert p is None
