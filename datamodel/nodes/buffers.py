@@ -1,3 +1,4 @@
+import time
 from datamodel.base import node
 
 
@@ -24,3 +25,20 @@ class Buffer(node.Node):
 
     def reset(self):
         self._params = dict()
+
+
+class DelayedBuffer(Buffer):
+    """
+    This node freezes for the specified amount of seconds and then returns
+    the rest of its parameters
+    Requirements:
+      seconds --> how many seconds to stay frozen
+    Eg:
+      Delayer(seconds=10, test1=1, test2=2)
+    """
+    _reqs = Buffer._reqs + ['seconds']
+
+    def output(self):
+        delay = self._params.pop('seconds', 0)
+        time.sleep(delay)
+        return self._params
