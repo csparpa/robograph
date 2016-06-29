@@ -1,4 +1,3 @@
-from datamodel.nodes import apply
 from datamodel.base import node
 
 
