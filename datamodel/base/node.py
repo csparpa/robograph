@@ -91,8 +91,8 @@ class Node:
             self._params[key] = None
         self._output_label = None
 
-    def __str__(self):
-        return u'<Node: %s - requires: %s - class: %s>' % (
-            self._name,
-            unicode(','.join(self._reqs)),
-            unicode(self.__class__))
+    def __repr__(self):
+        return '<node: %s instance of: %s requires: %s>' % (
+            self._name or '',
+            str(self.__class__),
+            ','.join(self._reqs) if self._reqs else 'nothing')
