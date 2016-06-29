@@ -1,4 +1,5 @@
-from datamodel.base import graph, node
+import pytest
+from datamodel.base import graph, node, exceptions
 
 # Utilities
 
@@ -138,3 +139,23 @@ def test_reset():
     for n in g.nodes:
         for p in n.parameters.values():
             assert p is None
+
+
+def test_connect():
+    n1 = WithParameters(a=1, b=2)
+    n2 = WithParameters(c=1, d=2)
+    g = graph.Graph('testgraph', [n1, n2])
+    not_included = WithParameters(e=1, f=2)
+
+    # Errors when trying to link nodes coming from out of the graph
+    with pytest.raises(exceptions.NodeConnectionError):
+        g.connect(n1, not_included, 'blabla')
+    with pytest.raises(exceptions.NodeConnectionError):
+        g.connect(not_included, n2, 'blabla')
+
+    # Now the correct procedure
+    assert n2.output_label is None
+    assert len(g.nxgraph.edges()) == 0
+    g.connect(n1, n2, 'label')
+    assert n2.output_label == 'label'
+    assert len(g.nxgraph.edges()) == 1

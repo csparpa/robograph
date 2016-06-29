@@ -47,6 +47,14 @@ class Node:
         """
         return self._params
 
+    @property
+    def output_label(self):
+        """
+        Returns the output label tag for this node's output value
+        :return: str
+        """
+        return self._output_label
+
     def input(self, context):
         """
         Updates _params with the _reqs entries that are found into context
