@@ -16,13 +16,16 @@ class WithParameters(node.Node):
         self._params.update(args)
 
 
-def make_a_graph():
+def make_a_graph_with_isles():
     root = Identity(name='root')
+    med1 = Identity(name='med1')
+    med2 = Identity(name='med2')
     leaf1 = Identity(name='leaf1')
     leaf2 = Identity(name='leaf2')
-    g = graph.Graph('testgraph', [leaf1, leaf2, root])
-    g.connect(root, leaf1, 'any1')
-    g.connect(root, leaf2, 'any2')
+    g = graph.Graph('testgraph', [leaf1, med1, med2, leaf2, root])
+    g.connect(root, med1, '1')
+    g.connect(root, med2, '2')
+    g.connect(med1, leaf1, '3')
     return g
 
 # Tests
@@ -122,7 +125,6 @@ def test_has_isles():
     g.connect(root, med2, '2')
     g.connect(med1, leaf1, '3')
     g.connect(med2, leaf2, '4')
-    g.connect(med1, leaf1, '3')
     assert not g.has_isles()
     g.remove_node(med2)
     assert g.has_isles()
@@ -150,8 +152,10 @@ def test_connect():
     # Errors when trying to link nodes coming from out of the graph
     with pytest.raises(exceptions.NodeConnectionError):
         g.connect(n1, not_included, 'blabla')
+        pytest.fail()
     with pytest.raises(exceptions.NodeConnectionError):
         g.connect(not_included, n2, 'blabla')
+        pytest.fail()
 
     # Now the correct procedure
     assert n2.output_label is None
@@ -159,3 +163,11 @@ def test_connect():
     g.connect(n1, n2, 'label')
     assert n2.output_label == 'label'
     assert len(g.nxgraph.edges()) == 1
+
+
+def test_execute_fails_with_graphs_with_isles():
+    g = make_a_graph_with_isles()
+    with pytest.raises(exceptions.GraphExecutionError):
+        g.execute()
+        pytest.fail()
+
