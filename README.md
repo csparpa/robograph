@@ -133,7 +133,7 @@ injected as input for node B with the label `xyz`
 
 Install the package with:
 
-    sudo pip install robogaph
+    sudo pip install robograph
 
 or clone this repository if you prefer.
 
