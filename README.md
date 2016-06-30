@@ -140,7 +140,7 @@ or clone this repository if you prefer.
 
 ## Drawing graphs
 ```python
-from datamodel.nodes import plotter
+from datamodel.nodes.lib import plotter
 
 # g is your graph
 plotter.show_plot(g)               # show it

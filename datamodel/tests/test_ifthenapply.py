@@ -1,5 +1,6 @@
 import math
-from datamodel.nodes import branching
+
+from datamodel.nodes.lib import branching
 
 
 def test_requirements():

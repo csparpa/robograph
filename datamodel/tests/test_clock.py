@@ -1,4 +1,4 @@
-from datamodel.nodes.quick import time
+from datamodel.nodes.lib import clock
 
 
 def check_date(year, month, day):
@@ -24,7 +24,7 @@ def check_time(hours, minutes, seconds):
 
 
 def test_date():
-    instance = time.Date()
+    instance = clock.Date()
     assert instance.requirements == []
     result = instance.output()
     year, month, day = result.split('-')
@@ -33,7 +33,7 @@ def test_date():
 
 def test_formatted_date():
     expected_reqs = ['format']
-    instance = time.FormattedDate()
+    instance = clock.FormattedDate()
     assert instance.requirements == expected_reqs
     instance.input(dict(format='%Ybla%mbla%d'))
     result = instance.output()
@@ -42,7 +42,7 @@ def test_formatted_date():
 
 
 def test_now():
-    instance = time.Now()
+    instance = clock.Now()
     assert instance.requirements == []
     result = instance.output()
     d, t = result.split('T')
@@ -53,7 +53,7 @@ def test_now():
 
 
 def test_utc_now():
-    instance = time.UtcNow()
+    instance = clock.UtcNow()
     assert instance.requirements == []
     result = instance.output()
     d, t = result.split('T')

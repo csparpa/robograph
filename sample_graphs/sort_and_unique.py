@@ -2,7 +2,7 @@
 # items and then write them back to a different file
 
 from datamodel.base import graph
-from datamodel.nodes import files, apply
+from datamodel.nodes.lib import files, apply
 
 
 def sort_and_unique(input_file_path, output_file_path):

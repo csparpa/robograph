@@ -1,4 +1,4 @@
-from datamodel.nodes.quick import maths
+from datamodel.nodes.lib import maths
 
 
 def test_sum():
@@ -48,14 +48,14 @@ def test_min():
 
 def test_sin():
     pi = maths.Pi().output()
-    instance = maths.Sin(argument=pi/2.)
+    instance = maths.Sin(argument=pi / 2.)
     instance.set_output_label('any')
     assert (1 - instance.output()) < 0.00001
 
 
 def test_cos():
     pi = maths.Pi().output()
-    instance = maths.Cos(argument=pi/2.)
+    instance = maths.Cos(argument=pi / 2.)
     instance.set_output_label('any')
     assert instance.output() < 0.00001
 

@@ -1,7 +1,7 @@
 # Various HTTP calls against HTTPBin
 
 from datamodel.base import graph
-from datamodel.nodes import value, printer
+from datamodel.nodes.lib import printer, value, http
 from datamodel.nodes.quick import http
 
 

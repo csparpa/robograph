@@ -1,5 +1,6 @@
 import math
-from datamodel.nodes import branching
+
+from datamodel.nodes.lib import branching
 
 
 def test_requirements():
@@ -39,9 +40,9 @@ def test_output():
     function_true = lambda x: math.sqrt(x)
     function_false = lambda x: 0
     instance = branching.IfThenReturn(data=data,
-                                     condition=condition,
-                                     function_true=function_true,
-                                     function_false=function_false)
+                                      condition=condition,
+                                      function_true=function_true,
+                                      function_false=function_false)
     instance.set_output_label('any')
 
     # case: true
@@ -50,9 +51,9 @@ def test_output():
     # case: false
     data = -34
     instance = branching.IfThenReturn(data=data,
-                                     condition=condition,
-                                     function_true=function_true,
-                                     function_false=function_false)
+                                      condition=condition,
+                                      function_true=function_true,
+                                      function_false=function_false)
     instance.set_output_label('any')
     assert instance.output() == function_false
 

@@ -1,4 +1,4 @@
-from datamodel.nodes import printer
+from datamodel.nodes.lib import printer
 
 
 def test_requirements():

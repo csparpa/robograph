@@ -1,6 +1,7 @@
 import math
+
 from datamodel.base.node import Node
-from datamodel.nodes import apply, value
+from datamodel.nodes.lib import value, apply
 
 
 # Constants

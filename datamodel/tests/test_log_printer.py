@@ -1,5 +1,6 @@
 import logging
-from datamodel.nodes import printer
+
+from datamodel.nodes.lib import printer
 
 log_level = logging.INFO
 logging.basicConfig(level=log_level)

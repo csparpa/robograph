@@ -2,7 +2,7 @@
 # If no occurrence is found, replace all whitespaces with "_" instead
 
 from datamodel.base import graph
-from datamodel.nodes import printer, value, branching
+from datamodel.nodes.lib import printer, branching, value
 
 
 def replace_word(text):

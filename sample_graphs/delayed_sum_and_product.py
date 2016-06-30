@@ -1,8 +1,9 @@
 # Long delay
 
 from datamodel.base import graph
-from datamodel.nodes import printer, value, buffers
 from datamodel.nodes import apply
+from datamodel.nodes import printer, value
+from datamodel.nodes.lib import buffers
 
 
 def delayed_sum_and_product(list_of_numbers, delay):

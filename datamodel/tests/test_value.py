@@ -1,4 +1,4 @@
-from datamodel.nodes import value
+from datamodel.nodes.lib import value
 
 
 def test_requirements():

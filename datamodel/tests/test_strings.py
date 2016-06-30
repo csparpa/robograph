@@ -1,4 +1,4 @@
-from datamodel.nodes import strings
+from datamodel.nodes.lib import strings
 
 
 def test_templated_string():

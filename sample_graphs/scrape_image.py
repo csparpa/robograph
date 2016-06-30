@@ -1,7 +1,7 @@
 # Downloads an image from a remote HTTP server and saves it to a local file
 
 from datamodel.base import graph
-from datamodel.nodes import files, value
+from datamodel.nodes.lib import files, value, http
 from datamodel.nodes.quick import http
 
 

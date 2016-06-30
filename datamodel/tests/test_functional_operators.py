@@ -1,4 +1,4 @@
-from datamodel.nodes.quick import functional_operators as fo
+from datamodel.nodes.lib import functional_operators as fo
 
 
 def sorting_function(x, y):

@@ -1,5 +1,6 @@
 import os
-from datamodel.nodes import files
+
+from datamodel.nodes.lib import files
 
 FILEPATH = os.path.abspath('datamodel/tests/outputfile.txt')
 EXPECTED_CONTENT = 'a\nb\nc'

@@ -1,5 +1,4 @@
-from datamodel.nodes.quick import transcoders
-
+from datamodel.nodes.lib import transcoders
 
 DATA = dict(x=[1, 2, 3])
 EXPECTED = '{"x": [1, 2, 3]}'

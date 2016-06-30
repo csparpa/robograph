@@ -1,5 +1,6 @@
 import time
-from datamodel.nodes import buffers
+
+from datamodel.nodes.lib import buffers
 
 
 def test_buffer():

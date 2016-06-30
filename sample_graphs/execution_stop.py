@@ -1,7 +1,7 @@
 # Demo on how to stop a graph execution
 
 from datamodel.base import graph, exceptions
-from datamodel.nodes import value, apply
+from datamodel.nodes.lib import apply, value
 
 
 def execution_stop(number):

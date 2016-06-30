@@ -1,7 +1,7 @@
 # Given an IP address, geolocate it and send the result over via e-mail
 
 from datamodel.base import graph
-from datamodel.nodes import value
+from datamodel.nodes.lib import value, http, email
 from datamodel.nodes.quick import email, http
 
 

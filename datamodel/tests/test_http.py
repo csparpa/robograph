@@ -1,4 +1,4 @@
-from datamodel.nodes.quick import http
+from datamodel.nodes.lib import http
 
 QUERY = dict(pippo="1", pluto="ciao")
 HEADERS = {

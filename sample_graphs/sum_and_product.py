@@ -1,9 +1,11 @@
 # Given a list of numbers, calculate its sum and product and print it on screen
 
 import logging
+
 from datamodel.base import graph
-from datamodel.nodes import printer, value, buffers
 from datamodel.nodes import apply
+from datamodel.nodes import printer, value
+from datamodel.nodes.lib import buffers
 
 
 def sum_and_product(list_of_numbers):

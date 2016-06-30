@@ -1,8 +1,9 @@
 import sqlite3
-import pytest
-from datamodel.nodes import db
-from datamodel.nodes.quick.dbs import sqlite_3
 
+import pytest
+
+from datamodel.nodes.lib import db
+from datamodel.nodes.lib.dbs import sqlite_3
 
 DBFILE = 'datamodel/tests/database.db'
 

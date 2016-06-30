@@ -1,4 +1,4 @@
-from datamodel.nodes import apply
+from datamodel.nodes.lib import apply
 
 
 class Not(apply.Apply):

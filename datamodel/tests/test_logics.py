@@ -1,4 +1,4 @@
-from datamodel.nodes.quick import logics
+from datamodel.nodes.lib import logics
 
 
 def test_not():

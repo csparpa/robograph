@@ -1,5 +1,6 @@
 import sqlite3
-from datamodel.nodes import db
+
+from datamodel.nodes.lib import db
 
 
 class Sqlite3Connection(db.FileDatabaseConnection):

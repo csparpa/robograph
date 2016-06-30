@@ -1,5 +1,4 @@
-from datamodel.nodes.quick import transcoders
-
+from datamodel.nodes.lib import transcoders
 
 DATA_MATRIX = [[1,2,3],[4,5,6],[7,8,9]]
 HEADER = ['one', 'two', 'three']
