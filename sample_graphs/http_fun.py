@@ -2,7 +2,6 @@
 
 from datamodel.base import graph
 from datamodel.nodes.lib import printer, value, http
-from datamodel.nodes.quick import http
 
 
 def test_get_graph(url, query_params):

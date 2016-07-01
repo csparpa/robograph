@@ -1,8 +1,6 @@
-from datamodel.nodes.quick import maths
-
 from datamodel.base import graph
-from datamodel.nodes import value, printer, plotter
-from datamodel.nodes.lib import buffers, maths
+from datamodel.nodes import plotter
+from datamodel.nodes.lib import value, printer, maths, buffers
 
 
 def plot():

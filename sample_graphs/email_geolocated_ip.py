@@ -2,7 +2,6 @@
 
 from datamodel.base import graph
 from datamodel.nodes.lib import value, http, email
-from datamodel.nodes.quick import email, http
 
 
 def email_geolocated_ip(recipients_list, smtp_server_params, ip_addr):

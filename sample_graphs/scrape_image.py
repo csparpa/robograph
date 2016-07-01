@@ -2,7 +2,6 @@
 
 from datamodel.base import graph
 from datamodel.nodes.lib import files, value, http
-from datamodel.nodes.quick import http
 
 
 def scraper_image(img_url, target_path):
