@@ -104,10 +104,10 @@ class Graph:
         """
         if not self._nxgraph.has_node(node_from):
             raise exceptions.NodeConnectionError('Graph does not contain '
-                                                 'this node')
+                                                 'node_from: %s' % (node_from,))
         if not self._nxgraph.has_node(node_to):
             raise exceptions.NodeConnectionError('Graph does not contain '
-                                                 'this node')
+                                                 'node_to: %s' % (node_to,))
         node_to.set_output_label(output_label)
         self._nxgraph.add_edge(node_from, node_to, name=output_label)
 
