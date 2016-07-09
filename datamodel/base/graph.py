@@ -39,6 +39,10 @@ class Graph:
     def nxgraph(self):
         return self._nxgraph
 
+    @property
+    def name(self):
+        return self._name
+
     def add_node(self, node):
         """
         Adds the specified node to the graph
