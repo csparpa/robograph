@@ -36,6 +36,19 @@ class Graph:
         return self._nxgraph.nodes()
 
     @property
+    def edges(self):
+        """
+        Returns a list of dicts, each one describing a edge of the graph
+        :return: list
+        """
+        nx_edges = self._nxgraph.edges(data=True)
+        result = []
+        for e in nx_edges:
+            result.append(dict(node_from=e[0], node_to=e[1],
+                               output_label=e[2]['name']))
+        return result
+
+    @property
     def nxgraph(self):
         return self._nxgraph
 

@@ -171,3 +171,16 @@ def test_execute_fails_with_graphs_with_isles():
         g.execute()
         pytest.fail()
 
+
+def test_get_edges():
+    n1 = WithParameters(a=1, b=2)
+    n2 = WithParameters(c=1, d=2)
+    root = WithParameters(x='x')
+    g = graph.Graph('testgraph', [n1, n2, root])
+    assert len(g.edges) == 0
+    g.connect(root, n1, 'child_1')
+    g.connect(root, n2, 'child_2')
+    result = g.edges
+    assert len(result) == 2
+    assert dict(node_from=root, node_to=n1, output_label='child_1') in result
+    assert dict(node_from=root, node_to=n2, output_label='child_2') in result
