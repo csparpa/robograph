@@ -5,5 +5,9 @@ node_modules/
 .idea
 .cache
 
+build/
+dist/
+robograph.egg-info/
+
 datamodel/tests/outputfile.txt
 datamodel/tests/database.db
