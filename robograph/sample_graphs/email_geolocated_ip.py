@@ -1,7 +1,7 @@
 # Given an IP address, geolocate it and send the result over via e-mail
 
 from robograph.datamodel.base import graph
-from robograph.datamodel.nodes.lib import value, http, email
+from robograph.datamodel.nodes.lib import value, email, http
 
 
 def email_geolocated_ip(recipients_list, smtp_server_params, ip_addr):

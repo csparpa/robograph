@@ -3,17 +3,17 @@ from setuptools import setup
 
 setup(
     name='robograph',
-    version='0.0.1',
+    version='0.0.3',
     description='A graph-oriented algorithmic engine',
     author='Claudio Sparpaglione (@csparpa)',
     author_email='csparpa@gmail.com',
     url='http://github.com/csparpa/robograph',
-    packages=['datamodel',
-              'datamodel.base',
-              'datamodel.nodes',
-              'datamodel.nodes.lib',
-              'datamodel.tests',
-              'docs',
+    packages=['robograph',
+              'robograph.datamodel',
+              'robograph.datamodel.base',
+              'robograph.datamodel.nodes',
+              'robograph.datamodel.nodes.lib',
+              'robograph.datamodel.tests',
               'sample_graphs'],
     long_description="""\
         Robograph is a platform that allows you to define your algorithms as computational graphs.

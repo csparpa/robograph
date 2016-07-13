@@ -3,7 +3,7 @@
 import logging
 
 from robograph.datamodel.base import graph
-from robograph.datamodel.nodes.lib import apply, printer, value, buffers
+from robograph.datamodel.nodes.lib import printer, value, buffers, apply
 
 
 def sum_and_product(list_of_numbers):

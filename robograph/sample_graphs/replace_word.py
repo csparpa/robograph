@@ -2,7 +2,7 @@
 # If no occurrence is found, replace all whitespaces with "_" instead
 
 from robograph.datamodel.base import graph
-from robograph.datamodel.nodes.lib import printer, branching, value
+from robograph.datamodel.nodes.lib import printer, value, branching
 
 
 def replace_word(text):

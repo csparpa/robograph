@@ -1,4 +1,4 @@
-from sample_graphs import sum_and_product, sort_and_unique, replace_word, \
+from robograph.sample_graphs import sum_and_product, sort_and_unique, replace_word, \
     scrape_image, http_fun, execution_stop, delayed_sum_and_product, drawing
 
 '''
