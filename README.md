@@ -46,7 +46,7 @@ The main advantages are:
   - ... and you can actually also visually draw the graphs themselves using GUIs
     on the top of Robograph.
 
-Of course using graphs to model problems also poses [a few limitations](https://github.com/csparpa/robograph/tree/master/docs/graph-abstractions.md), above all
+Of course using graphs to model problems also poses [a few limitations](https://github.com/csparpa/robograph/blob/master/docs/graph-abstraction.md), above all
 the fact that we can only represent synchronous coding tasks with it.
 
 
@@ -154,7 +154,7 @@ plotter.save_plot(g, 'graph.png')  # save it to file 'graph.png'
 Extending Robograph and creating new custom nodes is easy: you only need to
 subclass the `datamodel.base.node.Node` class and comply with its contract.
 
-[Full details in the docs](https://github.com/csparpa/robograph/tree/master/docs/creating-custom-nodes.md)
+[Full details in the docs](https://github.com/csparpa/robograph/blob/master/docs/creating-custom-nodes.md)
 
 Enough to say that each node must expose a list of *requirements* (the named
 inputs that we need in order to execute the node) and you must write what
