@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-py.test datamodel/tests
+py.test robograph/datamodel/tests

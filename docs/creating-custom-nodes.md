@@ -2,7 +2,7 @@
 
 ## TL;DR
 Extending Robograph and creating new custom nodes is easy: you only need to
-subclass the `datamodel.base.node.Node` class and comply with its contract.
+subclass the `robograph.datamodel.base.node.Node` class and comply with its contract.
 
 The contract is simple: *just state what the required parameters for your custom
 node are and provide an implementation for the `output()` method*
@@ -29,7 +29,7 @@ and will return the output string.
 The full implementation of your custom node would simply be:
 
 ```python
-from datamodel.base import node
+from robograph.datamodel.base import node
 
 class MyCustomNode(node.Node):
 
@@ -43,8 +43,8 @@ and you can now create graphs that use the node:
 
 ```python
 
-from datamodel.base import graph
-from datamodel.nodes.lib import value
+from robograph.datamodel.base import graph
+from robograph.datamodel.nodes.lib import value
 # <import your node here>
 
 first_input = value.Value(value='hello')
