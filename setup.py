@@ -13,7 +13,6 @@ setup(
               'datamodel.nodes',
               'datamodel.nodes.lib',
               'datamodel.tests',
-              'docs',
               'sample_graphs'],
     long_description="""\
         Robograph is a platform that allows you to define your algorithms as computational graphs.
