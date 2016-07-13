@@ -12,7 +12,6 @@ setup(
               'datamodel.base',
               'datamodel.nodes',
               'datamodel.nodes.lib',
-              'datamodel.nodes.lib.dbs',
               'datamodel.tests',
               'docs',
               'sample_graphs'],
