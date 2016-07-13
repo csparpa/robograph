@@ -1,4 +1,5 @@
-from robograph.sample_graphs import drawing
+from robograph.sample_graphs import sum_and_product, sort_and_unique, replace_word, \
+    scrape_image, http_fun, execution_stop, delayed_sum_and_product, drawing
 
 '''
 g1 = sum_and_product.sum_and_product([1, 2, 3, 4])
