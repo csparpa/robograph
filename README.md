@@ -46,7 +46,7 @@ The main advantages are:
   - ... and you can actually also visually draw the graphs themselves using GUIs
     on the top of Robograph.
 
-Of course using graphs to model problems also poses [a few limitations](https://github.com/csparpa/robograph/docs/graph-abstractions.md), above all
+Of course using graphs to model problems also poses [a few limitations](https://github.com/csparpa/robograph/tree/master/docs/graph-abstractions.md), above all
 the fact that we can only represent synchronous coding tasks with it.
 
 
@@ -55,6 +55,13 @@ Because graphs can be understood and managed also by people that don't have
 coding skills. And also because you can benefit from the basic nodes library.
 Moreover, single nodes and subgraphs can be reused over different algorithms
 without the need to change them. And finally, because it's fun!
+
+## Installing Robograph
+
+As simple as:
+
+    sudo pip install robograph
+
 
 ## Graph examples
 There are lots of graph samples in the `sample_graphs` folders: each module over
@@ -128,15 +135,13 @@ g.connect(B, A, 'xyz')
 it means that we connect node B to node A, and the output of node A will be
 injected as input for node B with the label `xyz`
 
-
-## Installing Robograph
-
-Install the package with:
-
-    sudo pip install robograph
+This is because data flow from the "outer" (leaf) nodes of the graph towards
+its root node, which gives the overall output of the computation.
 
 
 ## Drawing graphs
+You can visualize your graphs very easily:
+
 ```python
 from datamodel.nodes.lib import plotter
 
@@ -149,7 +154,7 @@ plotter.save_plot(g, 'graph.png')  # save it to file 'graph.png'
 Extending Robograph and creating new custom nodes is easy: you only need to
 subclass the `datamodel.base.node.Node` class and comply with its contract.
 
-[Full details here](https://github.com/csparpa/robograph/docs/creating-custom-nodes.md)
+[Full details in the docs](https://github.com/csparpa/robograph/tree/master/docs/creating-custom-nodes.md)
 
 Enough to say that each node must expose a list of *requirements* (the named
 inputs that we need in order to execute the node) and you must write what
