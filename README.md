@@ -109,8 +109,8 @@ g.add_nodes([url, filepath, http_client, file_writer])
 # first, tell the http_client node the URL to GET..
 g.connect(client, url, 'url')
 
-# ..them tell the file_writer what is the target file path..
-g.connect(file_writer, filepath, 'filepath'
+# ..then tell the file_writer what is the target file path..
+g.connect(file_writer, filepath, 'filepath')
 
 # ..then tell the file_writer to write the output of http_client to the target file
 g.connect(file_writer, client, 'data')
@@ -134,8 +134,6 @@ injected as input for node B with the label `xyz`
 Install the package with:
 
     sudo pip install robograph
-
-or clone this repository if you prefer.
 
 
 ## Drawing graphs
