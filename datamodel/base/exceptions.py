@@ -1,3 +1,10 @@
+class NodeOutputLabelUndefinedError(Exception):
+    """
+    Marks that the label for a node's output is still not specified
+    """
+    pass
+
+
 class GraphError(Exception):
     """
     Base class for Graph errors
@@ -10,6 +17,12 @@ class NodeConnectionError(GraphError):
     This is to mark an error in connecting nodes of a graph
     """
     pass
+
+
+class NodeDeletionError(GraphError):
+    """
+    This is to mark an error in deleting nodes of a graph
+    """
 
 
 class StopGraphExecutionSignal(Exception):

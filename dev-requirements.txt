@@ -1,1 +1,2 @@
 pytest==2.9.2
+matplotlib==1.5.1

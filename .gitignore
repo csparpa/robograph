@@ -3,3 +3,11 @@ node_modules/
 *.log
 *.pyc
 .idea
+.cache
+
+build/
+dist/
+robograph.egg-info/
+
+datamodel/tests/outputfile.txt
+datamodel/tests/database.db

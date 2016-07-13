@@ -1,5 +1,5 @@
 from sample_graphs import sum_and_product, sort_and_unique, replace_word, \
-    scrape_image, http_fun, execution_stop
+    scrape_image, http_fun, execution_stop, delayed_sum_and_product, drawing
 
 '''
 g1 = sum_and_product.sum_and_product([1, 2, 3, 4])
@@ -21,10 +21,10 @@ g3.execute()
 g4 = scrape_image.scraper_image('https://httpbin.org/image/png',
                                 'sample_graphs/testscraped.png')
 g4.execute()
-'''
 
 
-'''
+
+
 g5 = http_fun.test_post_graph('https://httpbin.org/post', dict(x=1, y=2))
 g5.execute()
 
@@ -38,7 +38,13 @@ g7.execute()
 g8 = http_fun.test_delete_graph('https://httpbin.org/delete')
 g8.execute()
 
-'''
+
 
 g9 = execution_stop.execution_stop(-7)
 g9.execute()
+
+g10 = delayed_sum_and_product.delayed_sum_and_product([8, 0, 2], 7)
+g10.execute()
+'''
+
+g11 = drawing.plot()
