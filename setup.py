@@ -14,7 +14,7 @@ setup(
               'robograph.datamodel.nodes',
               'robograph.datamodel.nodes.lib',
               'robograph.datamodel.tests',
-              'sample_graphs'],
+              'robograph.sample_graphs'],
     long_description="""\
         Robograph is a platform that allows you to define your algorithms as computational graphs.
         Once you've defined the graph, you can execute that graph as if it was a SW
