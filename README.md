@@ -68,7 +68,6 @@ There are lots of graph samples in the `sample_graphs` folders: each module over
 there is a graph factory that you can use to instantiate a graph. Eg:
 
 ```python
-<<<<<<< HEAD
 from robograph.sample_graphs import sum_and_product
 graph = sum_and_product.sum_and_product([3, 4, 5])
 output = graph.execute()  # {'sum value': 12, 'product value': 60}
@@ -94,13 +93,8 @@ Creating a graph is easy:
 Let's do it:
 
 ```python
-<<<<<<< HEAD
 from robograph.datamodel.base import graph
 from robograph.datamodel.nodes.lib import files, value, http
-=======
-from datamodel.base import graph
-from datamodel.nodes.lib import files, value, http
->>>>>>> master
 
 # Create the leaf nodes
 url = value.Value(value='http://httpbin.org/image/png', name='url')
@@ -149,11 +143,7 @@ its root node, which gives the overall output of the computation.
 You can visualize your graphs very easily:
 
 ```python
-<<<<<<< HEAD
 from robograph.datamodel.nodes.lib import plotter
-=======
-from datamodel.nodes.lib import plotter
->>>>>>> master
 
 # g is your graph
 plotter.show_plot(g)               # show it
@@ -162,11 +152,7 @@ plotter.save_plot(g, 'graph.png')  # save it to file 'graph.png'
 
 ## Writing your custom nodes
 Extending Robograph and creating new custom nodes is easy: you only need to
-<<<<<<< HEAD
 subclass the `robograph.datamodel.base.node.Node` class and comply with its contract.
-=======
-subclass the `datamodel.base.node.Node` class and comply with its contract.
->>>>>>> master
 
 [Full details in the docs](https://github.com/csparpa/robograph/blob/master/docs/creating-custom-nodes.md)
 
