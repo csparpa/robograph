@@ -38,7 +38,7 @@ setup(
         'cloudpickle==0.2.1',
         'jsonpickle==0.9.3',
         'networkx==1.11',
-        'requests==2.20.0'
+        'requests==2.31.0'
     ],
     keywords='robograph graph node engine computing',
     license='MIT',
